@@ -1,0 +1,50 @@
+Planos da WolfMenu:
+
+-Essencial: R$ 39,90
+	Cadastro de 1 unidade.
+	Não ter direito a funcionário (usuário, colaborador, etc).
+	Cadastro de até 3 categorias de produtos (Lanches, Bebidas, Pratos, etc).
+	Cadastro de até 3 produtos para as 10 categorias (X-Burguer, Coca-Cola, Strogonoff, etc).
+	Cadastro de até 3 links para a única unidade (algo parecido com o Linktree).
+------------
+
+-Enhanced: R$ 59,90
+	Cadastro de até 3 unidades.
+	Ter direito a 3 funcionários/usuários/colaboradores por unidade.
+	Cadastro de até 20 categorias .
+	Cadastro de até 20 produtos para as 20 categorias.
+	Cadastro de até 5 links para cada unidade.
+------------
+
+-Premium: R$ 79,90
+	Cadastro de até 10 unidades.
+	Ter direito a 10 funcionários por unidade.
+	Cadastro de até 50 categorias.
+	Cadastro de até 50 produtos para 50 categorias.
+	Cadastro de 10 links para cada unidade.
+------------
+
+-Business: R$ 199,90 (Ou negociável)
+	Benefícios a partir da demanda necessária do negócio.
+------------
+
+Observações:
+	
+-Essencial: 
+	Plano feito exclusivamente para pequenos negócios (A menos tempo no mercado ou algo assim).
+
+------------
+
+-Enhanced:
+	Plano feito para negócios que já estão em processo de escala (Abrindo franquias ou algo relacionado).
+
+------------
+
+-Advanced:
+	Plano feito para negócios que já possuem franquias, ou mais unidades.
+
+------------
+
+-Business:
+	Plano feito para negócios já consolidados no mercado, dezenas e dezenas de unidades, ou franquias (No começo será dificil captar esses clientes, mas uma hora vai).
+------------
