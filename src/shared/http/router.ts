@@ -5,6 +5,8 @@ import UserRouter from "../../modules/user/router/user.router";
 import UnitRouter from "../../modules/unit/router/unit.router";
 import PlanRouter from "../../modules/plan/router/plan.router";
 import StripeRouter from "../../modules/stripe/router/stripe.router";
+import CategoryRouter from "../../modules/category/router/category.router";
+import ProductRouter from "../../modules/product/router/product.router";
 //@ImportRouter
 
 export default class MainRouter implements IRouter {
@@ -15,6 +17,8 @@ export default class MainRouter implements IRouter {
         private unitRouter = container.resolve<IRouter>(UnitRouter),
         private planRouter = container.resolve<IRouter>(PlanRouter),
         private stripeRouter = container.resolve<IRouter>(StripeRouter),
+        private categoryRouter = container.resolve<IRouter>(CategoryRouter),
+        private productRouter = container.resolve<IRouter>(ProductRouter),
         //@InstanceRouter
 
     ) {
@@ -23,6 +27,8 @@ export default class MainRouter implements IRouter {
         this.router.use('/unities', this.unitRouter.init());
         this.router.use('/plans', this.planRouter.init());
         this.router.use('/stripe', this.stripeRouter.init());
+        this.router.use('/categories', this.categoryRouter.init());
+        this.router.use('/products', this.productRouter.init());
         //@NewInitInstance
     }
 

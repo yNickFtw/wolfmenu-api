@@ -7,4 +7,6 @@ export interface IUser {
   profileImage: string;
   phone: string;
   isVerified: boolean;
+  planUser: string;
+  planStatus: string;
 }

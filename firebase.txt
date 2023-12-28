@@ -1,0 +1,58 @@
+import { Request, Response, NextFunction } from 'express';
+import { v4 as uuidv4 } from "uuid";
+
+import admin from 'firebase-admin';
+import serviceAccount from '../config/firebase-key.json';
+
+const serviceAcconuntVar: any = serviceAccount;
+
+const BUCKET = "threads-clone-287ee.appspot.com";
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAcconuntVar),
+  storageBucket: BUCKET
+});
+
+const bucket = admin.storage().bucket();
+
+const uploadImage = (req: Request, res: Response, next: NextFunction) => {
+  if (!req.file) return next();
+
+  const image = req.file;
+  const uuid = uuidv4();
+  const imageFormat = image.originalname.split('.').pop(); // Obtém o formato da imagem
+  const filename = `${uuid}.${imageFormat}`;
+  
+  // Determina o prefixo com base na URL da requisição
+  let prefix = '';
+  if (req.path.includes('/thread')) {
+    prefix = 'threads/';
+  } else if (req.path.includes('/user')) {
+    prefix = 'users/';
+  }
+
+  const file = bucket.file(prefix + filename);
+
+  const stream = file.createWriteStream({
+    metadata: {
+      contentType: image.mimetype,
+    }
+  });
+
+  stream.on("error", (e: any) => {
+    console.error(e);
+  });
+
+  stream.on("finish", async () => {
+    await file.makePublic();
+
+    (image as any).firebaseUrl = `https://storage.googleapis.com/${BUCKET}/${prefix}${filename}`;
+    (image as any).filename = filename;
+
+    next();
+  });
+
+  stream.end(image.buffer);
+};
+
+export default uploadImage;

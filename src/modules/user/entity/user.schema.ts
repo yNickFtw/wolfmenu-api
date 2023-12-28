@@ -41,6 +41,16 @@ const User = database.define('users', {
     isVerified: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
+    },
+    plan: {
+        type: DataTypes.STRING(),
+        allowNull: false,
+        defaultValue: "Essential"
+    },
+    planStatus: {
+        type: DataTypes.STRING(),
+        allowNull: false,
+        defaultValue: "ACTIVE"
     }
 })
 

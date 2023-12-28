@@ -79,10 +79,6 @@ export default class CreateUnitUseCase implements ICreateUnitUseCase, IAppError 
 
         const instanceOfUserService = container.resolve<IUserService>(UserService);
 
-        const userPlan = await instanceOfUserService.checkUserPlan(userId);
-
-        console.log(userPlan)
-
         const unit = await this.UnitRepository.findBySlug(slug)
 
         if(unit) {

@@ -15,8 +15,15 @@ export default class UserService implements IUserService {
     ) {
     }
 
-    public async checkUserPlan(userId: string): Promise<string> {
-        return userId;
+    public async canUserCreateUnit(userId: string): Promise<boolean> {
+        return true;
     }
 
+    public async canUserCreateACategory(unitId: string): Promise<boolean> {
+        return true   
+    }
+
+    public async canUserCreateAProductToCategory(unitId: string, categoryId: string): Promise<boolean> {
+        return true;
+    }
 }

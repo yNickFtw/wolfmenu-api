@@ -19,7 +19,8 @@ const Plan = database.define('plan', {
     stripeId: {
         type: DataTypes.STRING(),
         allowNull: true,
-    }
+    },
+    
 })
 
 export { Plan };

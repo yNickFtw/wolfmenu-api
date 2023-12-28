@@ -9,6 +9,10 @@ import { IPlanRepository } from '../interfaces/modules/plan/repository/IPlanRepo
 import PlanRepository from '../../modules/plan/repository/plan.repository'
 import { IStripeRepository } from '../interfaces/modules/stripe/repository/IStripeRepository'
 import StripeRepository from '../../modules/stripe/repository/stripe.repository'
+import { ICategoryRepository } from '../interfaces/modules/category/repository/ICategoryRepository'
+import CategoryRepository from '../../modules/category/repository/category.repository'
+import { IProductRepository } from '../interfaces/modules/product/repository/IProductRepository'
+import ProductRepository from '../../modules/product/repository/product.repository'
 //@ImportInjection
 
 // @Imports Routes
@@ -16,7 +20,11 @@ import UserRouter from '../../modules/user/router/user.router'
 import UnitRouter from '../../modules/unit/router/unit.router'
 import PlanRouter from '../../modules/plan/router/plan.router'
 import StripeRouter from '../../modules/stripe/router/stripe.router'
+import CategoryRouter from '../../modules/category/router/category.router'
+import ProductRouter from '../../modules/product/router/product.router'
 //@ImportRouter
+  
+  
   
   
 
@@ -56,6 +64,16 @@ container.register<IStripeRepository>(
 "StripeRepository",
 StripeRepository
 )
+
+container.register<ICategoryRepository>(
+"CategoryRepository",
+CategoryRepository
+)
+
+container.register<IProductRepository>(
+"ProductRepository",
+ProductRepository
+)
 //@InjectionDependecy
 
 // @Routers
@@ -80,7 +98,19 @@ container.register<IRouter>(
   "StripeRouter",
   StripeRouter
 )
+
+container.register<IRouter>(
+  "CategoryRouter",
+  CategoryRouter
+)
+
+container.register<IRouter>(
+  "ProductRouter",
+  ProductRouter
+)
 //@RouterInjection
+
+
 
 
 
@@ -104,11 +134,6 @@ container.register<IFirebaseService>(
 container.register<IBCryptService>(
   "BCryptService",
   BCryptService
-)
-
-container.register<IUserService>(
-  "UserService",
-  UserService
 )
 
 //@NewService
