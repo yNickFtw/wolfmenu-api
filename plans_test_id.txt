@@ -1,0 +1,33 @@
+Essential: FREE
+Enhanced: price_1ORlHkA2W34ZDJNHNmVVc1LJ
+Premium: price_1OSvb0A2W34ZDJNHENp9Rwwb
+
+{
+	"name": "Essential",
+	"price": "00.00",
+	"stripeId": "FREE",
+	"quantityLimitUnities": 1,
+	"quantityLimitCategory": 3,
+	"quantityLimitProduct": 3,
+	"quantityLimitLinks": 1
+}
+
+{
+	"name": "Enhanced",
+	"price": "59.00",
+	"stripeId": "price_1ORlHkA2W34ZDJNHNmVVc1LJ",
+	"quantityLimitUnities": 5,
+	"quantityLimitCategory": 10,
+	"quantityLimitProduct": 15,
+	"quantityLimitLinks": 5
+}
+
+{
+	"name": "Premium",
+	"price": "79.00",
+	"stripeId": "price_1OSvb0A2W34ZDJNHENp9Rwwb",
+	"quantityLimitUnities": 15,
+	"quantityLimitCategory": 30,
+	"quantityLimitProduct": 30,
+	"quantityLimitLinks": 5
+}

@@ -6,8 +6,6 @@ import { IUnitRepository } from "../../../shared/interfaces/modules/unit/reposit
 import { IUserRepository } from "../../../shared/interfaces/modules/user/repository/IUserRepository";
 import { IJWTService } from "../../../shared/services/JWTService/IJWTService";
 import { container } from "tsyringe";
-import { IUserService } from "../../../shared/services/UserService/IUserService";
-import UserService from "../../../shared/services/UserService/UserService";
 import { IUnit } from "../../../shared/interfaces/modules/unit/IUnit";
 
 @injectable()
@@ -76,8 +74,6 @@ export default class CreateUnitUseCase implements ICreateUnitUseCase, IAppError 
 
             throw error;
         }
-
-        const instanceOfUserService = container.resolve<IUserService>(UserService);
 
         const unit = await this.UnitRepository.findBySlug(slug)
 

@@ -180,16 +180,14 @@ ${schemaName}Repository
 //@InjectionDependecy`
 
   let addImportInjectionRouterTemplate = `import ${schemaName}Router from '../../modules/${moduleName}/router/${moduleName}.router'
-//@ImportRouter
-  `
+//@ImportRouter`
 
   let addInjectionRouterTemplate = `
 container.register<IRouter>(
   "${schemaName}Router",
   ${schemaName}Router
 )
-//@RouterInjection
-`
+//@RouterInjection`
 
   let containerPath = path.join(__dirname, 'src', 'shared', 'container', 'index.ts')
 

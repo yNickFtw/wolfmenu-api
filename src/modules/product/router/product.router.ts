@@ -9,8 +9,9 @@ export default class ProductRouter implements IRouter {
 
     constructor() {
         this.router = Router()
-        this.router.post('/create', new AuthGuardMiddleware().execute, upload.single('file'), new CreateProductController().execute);
-        //@NewController
+        this.router.post('/create/:unitId', new AuthGuardMiddleware().execute, upload.single('file'), new CreateProductController().execute);
+    //@NewController
+    
 
     }
 

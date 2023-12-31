@@ -23,11 +23,6 @@ import StripeRouter from '../../modules/stripe/router/stripe.router'
 import CategoryRouter from '../../modules/category/router/category.router'
 import ProductRouter from '../../modules/product/router/product.router'
 //@ImportRouter
-  
-  
-  
-  
-
 
 import JWTService from '../services/JWTService/JWTService';
 import { IJWTService } from '../services/JWTService/IJWTService';
@@ -37,10 +32,7 @@ import FirebaseService from '../services/FirebaseService/FirebaseService';
 import { IFirebaseService } from '../services/FirebaseService/IFirebaseService'
 import BCryptService from '../services/BCryptService/BCryptService';
 import { IBCryptService } from '../services/BCryptService/IBCryptService'
-import UserService from '../services/UserService/UserService';
-import { IUserService } from '../services/UserService/IUserService'
 //@ImportService
-
 
 // @Repositories
 
@@ -48,7 +40,6 @@ container.register<IUserRepository>(
   "UserRepository",
   UserRepository
 )
-
 
 container.register<IUnitRepository>(
   "UnitRepository",
@@ -83,7 +74,6 @@ container.register<IRouter>(
   UserRouter
 )
 
-
 container.register<IRouter>(
   "UnitRouter",
   UnitRouter
@@ -109,11 +99,6 @@ container.register<IRouter>(
   ProductRouter
 )
 //@RouterInjection
-
-
-
-
-
 
 // @Services
 container.register<IJWTService>(

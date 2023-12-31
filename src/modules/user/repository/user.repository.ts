@@ -26,4 +26,8 @@ export default class UserRepository implements IUserRepository {
 
         return
     }
+
+    public async update(user: Partial<IUser>): Promise<void> {
+        
+    }
 }

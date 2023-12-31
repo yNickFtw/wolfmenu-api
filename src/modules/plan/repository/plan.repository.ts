@@ -20,4 +20,19 @@ export default class PlanRepository implements IPlanRepository {
 
         return plan as unknown as IPlan;
     }
+
+    public async findByStripeId(stripeId: string): Promise<IPlan | null> {
+        const plan = await Plan.findOne({ where: { stripeId: stripeId } });
+
+        return plan as unknown as IPlan;
+    }
+
+    public async findAll(): Promise<IPlan[] | []> {
+        const plans = await Plan.findAll({
+            order: [['price', 'ASC']]
+        });
+    
+        return plans as unknown as IPlan[];
+    }
+    
 }

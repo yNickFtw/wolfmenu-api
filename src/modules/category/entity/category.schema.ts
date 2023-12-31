@@ -17,6 +17,11 @@ const Category = database.define('category', {
         type: DataTypes.TEXT(),
         allowNull: false,
     },
+    isAvailable: {
+        type: DataTypes.BOOLEAN(),
+        allowNull: false,
+        defaultValue: true
+    }
 })
 
 export { Category };

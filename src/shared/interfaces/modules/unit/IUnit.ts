@@ -1,3 +1,5 @@
+import { IUser } from "../user/IUser";
+
 export interface IUnit {
     id: string;
     name: string;
@@ -9,4 +11,5 @@ export interface IUnit {
     state: string;
     zip_code: string;
     userId: string;
+    user: Partial<IUser>;
 }

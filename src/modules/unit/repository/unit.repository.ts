@@ -20,4 +20,16 @@ export default class UnitRepository implements IUnitRepository {
 
         return unit as unknown as IUnit;
     }
+
+    public async countAllUnitiesOfUserByUserId(userId: string): Promise<number> {
+        const unitQtd = await Unit.count({ where: { userId: userId } });
+
+        return unitQtd
+    }
+
+    public async findById(unitId: string): Promise<IUnit | null> {
+        const unit = await Unit.findOne({ where: { id: unitId } });
+
+        return unit as unknown as IUnit;
+    }
 }

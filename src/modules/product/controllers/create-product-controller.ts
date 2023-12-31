@@ -10,13 +10,7 @@ export default class CreateProductController implements IController {
             // Lógica do Controller
             const instanceOfCreateProductUseCase = container.resolve<ICreateProductUseCase>(CreateProductUseCase)
 
-            if(!req.file) {
-                return res.status(400).json({ message: "Coloque uma imagem para teste" })
-            }
-
-            await instanceOfCreateProductUseCase.execute('oi', 'test', '532', '53425', req.file)
-
-            return res.status(200).json({ message: "Produto criado com sucesso!" });
+            return res.status(200).json();
         } catch (error: any) {
             if (error.statusCode && error.message) {
                 return res.status(error.statusCode).json({ message: error.message });

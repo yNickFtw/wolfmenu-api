@@ -1,20 +1,18 @@
 import { Request, Response } from "express";
 import { IController } from "../../../shared/interfaces/globals/IController";
 import { container } from "tsyringe";
-import { ICreatePlanUseCase } from "../../../shared/interfaces/modules/plan/useCases/ICreatePlanUseCase";
-import CreatePlanUseCase from "../useCases/create-plan-useCase";
+import { IFetchLoggedUserUseCase } from "../../../shared/interfaces/modules/user/useCases/IFetchLoggedUserUseCase";
+import FetchLoggedUserUseCase from "../useCases/fetch-logged-user-useCase";
 
-export default class CreatePlanController implements IController {
+export default class FetchLoggedUserController implements IController {
     public async execute(req: Request, res: Response): Promise<Response> {
         try {
             // Lógica do Controller
-            const { name, price, stripeId, quantityLimitUnities, quantityLimitCategory, quantityLimitProduct, quantityLimitLinks } = req.body;
+            const instanceOfFetchLoggedUserUseCase = container.resolve<IFetchLoggedUserUseCase>(FetchLoggedUserUseCase)
 
-            const instanceOfCreatePlanUseCase = container.resolve<ICreatePlanUseCase>(CreatePlanUseCase)
+            const user = await instanceOfFetchLoggedUserUseCase.execute(req.headers["authorization"] as string);
 
-            await instanceOfCreatePlanUseCase.execute(name, price, stripeId, quantityLimitUnities, quantityLimitLinks, quantityLimitProduct, quantityLimitCategory );
-
-            return res.status(201).json({ message: "Plano criado com sucesso" });
+            return res.status(200).json(user);
         } catch (error: any) {
             if (error.statusCode && error.message) {
                 return res.status(error.statusCode).json({ message: error.message });

@@ -19,11 +19,13 @@ export default class StripeWebhookUseCase implements IStripeWebhookUseCase, IApp
         let event;
 
         try {
-            event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_SECRET_KEY!);
+            event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_KEY!);
 
             console.log(event.type);
 
             console.log("Chegou aqui")
+
+            return;
         } catch (error: any) {
             console.log("Chegou aqui erro")
             const errorE: IAppError = {

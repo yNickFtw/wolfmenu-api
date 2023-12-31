@@ -42,7 +42,35 @@ const User = database.define('users', {
         type: DataTypes.BOOLEAN,
         defaultValue: false
     },
-    plan: {
+    address: {
+        type: DataTypes.STRING(),
+        allowNull: true,
+    },
+    district: {
+        type: DataTypes.STRING(),
+        allowNull: true,
+    },
+    city: {
+        type: DataTypes.STRING(),
+        allowNull: true,
+    },
+    state: {
+        type: DataTypes.STRING(),
+        allowNull: true,
+    },
+    zip_code: {
+        type: DataTypes.STRING(),
+        allowNull: true,
+    },
+    document: {
+        type: DataTypes.STRING(),
+        allowNull: true,
+    },
+    customerId: {
+        type: DataTypes.STRING(),
+        allowNull: true,
+    },
+    planUser: {
         type: DataTypes.STRING(),
         allowNull: false,
         defaultValue: "Essential"

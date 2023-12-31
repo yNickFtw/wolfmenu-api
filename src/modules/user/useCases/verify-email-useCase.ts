@@ -37,9 +37,9 @@ export default class VerifyEmailUseCase implements IVerifyEmailUseCase, IAppErro
             const decoded = this.JWTService.decodeToken(token, false);
 
             if(decoded) {
-                const { userId } = decoded;
+                const { userIdEmail } = decoded;
 
-                const user = await this.UserRepository.findById(userId)
+                const user = await this.UserRepository.findById(userIdEmail)
 
                 if(!user) {
                     const error: IAppError = {
@@ -52,14 +52,14 @@ export default class VerifyEmailUseCase implements IVerifyEmailUseCase, IAppErro
 
                 if(user!.isVerified) {
                     const error: IAppError = {
-                        statusCode: 400,
-                        message: "Seu email já foi verificado."
+                        statusCode: 302,
+                        message: "Seu email já é verificado."
                     };
 
                     throw error;
                 }
 
-                await this.UserRepository.verifyEmailById(userId);
+                await this.UserRepository.verifyEmailById(userIdEmail);
 
                 let html = `
                 <h1>Olá, ${user!.firstName}.</h1>
@@ -81,14 +81,14 @@ export default class VerifyEmailUseCase implements IVerifyEmailUseCase, IAppErro
         } catch (error: any) {
             if (error instanceof TokenExpiredError) {
                 const errorE: IAppError = {
-                    statusCode: 400,
+                    statusCode: 401,
                     message: "Token expirado, clique no botão abaixo para receber outro link de verificação!"
                 };
 
                 throw errorE;
             } else {
                 const errorE: IAppError = {
-                    statusCode: 400,
+                    statusCode: error.statusCode,
                     message: error.message
                 };
 

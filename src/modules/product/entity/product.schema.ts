@@ -28,6 +28,11 @@ const Product = database.define('product', {
     productImageFilename: {
         type: DataTypes.STRING(),
         allowNull: false
+    },
+    isAvailable: {
+        type: DataTypes.BOOLEAN(),
+        allowNull: false,
+        defaultValue: true
     }
 })
 

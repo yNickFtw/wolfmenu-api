@@ -10,8 +10,8 @@ export default class JWTService implements IJWTService {
         this.JWT_SECRET = process.env.JWT_SECRET as string;
     }
 
-    public generateToken(userId: string, expIn: string): string {
-        return jwt.sign({ userId }, this.JWT_SECRET, {
+    public generateToken(payload: {}, expIn: string): string {
+        return jwt.sign(payload, this.JWT_SECRET, {
             expiresIn: expIn
         });
     }

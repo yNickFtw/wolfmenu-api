@@ -68,12 +68,16 @@ export default class CreateUserUseCase implements ICreateUserUseCase, IAppError 
 
         const userCreated = await this.UserRepository.create(user);
 
-        const token = this.JWTService.generateToken(userCreated.id, "5d")
+        const payload = {
+            userIdEmail: userCreated.id
+        }
+
+        const token = this.JWTService.generateToken(payload, "5d")
 
         let html = `
         <h1>Olá, ${firstName}!</h1>
         <h2>Verifique seu email clicando no link abaixo:</h2>
-        <h3>${token}</h3>
+        <h3>${process.env.CLIENT_URL}/verify/email?token=${token}</h3>
         `
 
         await this.SMTPService.send(email, 'Verificação de email na WolfMenu!.', html)

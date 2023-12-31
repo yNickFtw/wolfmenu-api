@@ -1,20 +1,22 @@
 import { Request, Response } from "express";
 import { IController } from "../../../shared/interfaces/globals/IController";
 import { container } from "tsyringe";
-import { ICreatePlanUseCase } from "../../../shared/interfaces/modules/plan/useCases/ICreatePlanUseCase";
-import CreatePlanUseCase from "../useCases/create-plan-useCase";
+import { ICreateCategoryUseCase } from "../../../shared/interfaces/modules/category/useCases/ICreateCategoryUseCase";
+import CreateCategoryUseCase from "../useCases/create-category-useCase";
 
-export default class CreatePlanController implements IController {
+export default class CreateCategoryController implements IController {
     public async execute(req: Request, res: Response): Promise<Response> {
         try {
             // Lógica do Controller
-            const { name, price, stripeId, quantityLimitUnities, quantityLimitCategory, quantityLimitProduct, quantityLimitLinks } = req.body;
+            const { name, description } = req.body
+            
+            const { unitId } = req.params;
 
-            const instanceOfCreatePlanUseCase = container.resolve<ICreatePlanUseCase>(CreatePlanUseCase)
+            const instanceOfCreateCategoryUseCase = container.resolve<ICreateCategoryUseCase>(CreateCategoryUseCase)
 
-            await instanceOfCreatePlanUseCase.execute(name, price, stripeId, quantityLimitUnities, quantityLimitLinks, quantityLimitProduct, quantityLimitCategory );
+            await instanceOfCreateCategoryUseCase.execute(name, description, unitId, req.headers["authorization"]!);
 
-            return res.status(201).json({ message: "Plano criado com sucesso" });
+            return res.status(201).json({ message: "Categoria criada com sucesso" });
         } catch (error: any) {
             if (error.statusCode && error.message) {
                 return res.status(error.statusCode).json({ message: error.message });

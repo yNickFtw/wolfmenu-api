@@ -20,7 +20,22 @@ const Plan = database.define('plan', {
         type: DataTypes.STRING(),
         allowNull: true,
     },
-    
+    quantityLimitUnities: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+    },
+    quantityLimitCategory: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+    },
+    quantityLimitProduct: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+    },
+    quantityLimitLinks: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+    },
 })
 
 export { Plan };

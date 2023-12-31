@@ -5,6 +5,7 @@ import { IUserRepository } from "../../../shared/interfaces/modules/user/reposit
 import { IJWTResponse } from "../../../shared/interfaces/modules/user/useCases/IJWTResponse";
 import { IBCryptService } from "../../../shared/services/BCryptService/IBCryptService";
 import { IJWTService } from "../../../shared/services/JWTService/IJWTService";
+import { IUser } from "../../../shared/interfaces/modules/user/IUser";
 
 @injectable()
 export default class AuthenticateUserUseCase implements IAuthenticateUserUseCase, IAppError {
@@ -24,7 +25,7 @@ export default class AuthenticateUserUseCase implements IAuthenticateUserUseCase
     }
 
     public async execute(email: string, password: string): Promise<IJWTResponse> {
-        if(!email || !password) {
+        if (!email || !password) {
             const error: IAppError = {
                 statusCode: 400,
                 message: "Preencha todos os campos."
@@ -35,7 +36,7 @@ export default class AuthenticateUserUseCase implements IAuthenticateUserUseCase
 
         const user = await this.UserRepository.findByEmail(email)
 
-        if(!user) {
+        if (!user) {
             const error: IAppError = {
                 statusCode: 404,
                 message: "Verifique se os dados estão corretos."
@@ -46,7 +47,7 @@ export default class AuthenticateUserUseCase implements IAuthenticateUserUseCase
 
         const passwordMatch = await this.BCryptService.comparePassword(password, user.password);
 
-        if(!passwordMatch) {
+        if (!passwordMatch) {
             const error: IAppError = {
                 statusCode: 400,
                 message: "Verifique se os dados estão corretos."
@@ -55,7 +56,7 @@ export default class AuthenticateUserUseCase implements IAuthenticateUserUseCase
             throw error;
         }
 
-        if(user.isVerified === false) {
+        if (user.isVerified === false) {
             const error: IAppError = {
                 statusCode: 401,
                 message: "Você precisa verificar o seu e-mail antes de logar."
@@ -64,8 +65,12 @@ export default class AuthenticateUserUseCase implements IAuthenticateUserUseCase
             throw error;
         }
 
-        const token = this.JWTService.generateToken(user.id, '30d');
+        const payload = {
+            userId: user.id
+        }
 
-        return { userId: user.id, token: token } as IJWTResponse;
+        const token = this.JWTService.generateToken(payload, '30d');
+
+        return { userId: user.id, token: token, user: { id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName, planUser: user.planUser, planStatus: user.planStatus, profileImage: user.profileImage } as IUser } as IJWTResponse;
     }
 }

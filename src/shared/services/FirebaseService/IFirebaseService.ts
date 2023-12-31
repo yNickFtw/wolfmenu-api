@@ -6,5 +6,5 @@ export interface IFirebaseService {
     firebaseApp: FirebaseApp
     firebaseStorage: FirebaseStorage
 
-    uploadImage(filename: string, folder: string, file: Express.Multer.File): Promise<void>;
+    uploadImage(filename: string, folder: string, file: Express.Multer.File): Promise<string>;
 }

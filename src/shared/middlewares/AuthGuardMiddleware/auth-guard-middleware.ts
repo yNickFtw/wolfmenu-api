@@ -30,7 +30,7 @@ export default class AuthGuardMiddleware implements IAuthGuardMiddleware {
             if (error instanceof TokenExpiredError) {
                 return res.status(401).json({ message: "Sessão expirada, faça login novamente!" });
             } else {
-                return res.status(401).json({ message: "Sessão expirada, faça login novamente! Código 4", error: error.message });
+                return res.status(401).json({ message: "Sessão expirada, faça login novamente!", error: error.message });
             }
         }
     }
