@@ -2,6 +2,8 @@ import { ICategory } from "../../../shared/interfaces/modules/category/ICategory
 import { ICategoryRepository } from "../../../shared/interfaces/modules/category/repository/ICategoryRepository";
 import { Product } from "../../product/entity/product.schema";
 import { Category } from "../entity/category.schema";
+import database from "../../../database/config";
+import { QueryTypes } from "sequelize";
 
 export default class CategoryRepository implements ICategoryRepository {
     public async create(category: Partial<ICategory>): Promise<void> {
@@ -16,9 +18,11 @@ export default class CategoryRepository implements ICategoryRepository {
         return categoriesQtd;
     }
 
-    public async findAllCategoriesByUnitId(unitId: string): Promise<ICategory[] | null> {
-        const categories = await Category.findAll({ where: { unitId: unitId }, include: [{ model: Product, }] });
+    public async findAllCategoriesByUnitId(unitId: string): Promise<any> {
+        const categories = await Category.findAll({ where: { unitId: unitId }, include: [{ model: Product, attributes: ["name"], limit: 2 }] })
 
-        return categories as unknown as ICategory[];
+            console.log(categories);
+
+        return categories
     }
 }

@@ -1,22 +1,19 @@
 import { Request, Response } from "express";
 import { IController } from "../../../shared/interfaces/globals/IController";
 import { container } from "tsyringe";
-import { ICreateSessionCheckoutUseCase } from "../../../shared/interfaces/modules/stripe/useCases/ICreateSessionCheckoutUseCase";
-import CreateSessionCheckoutUseCase from "../useCases/create-session-checkout-useCase";
+import { IFetchAllUnitiesOfUserUseCase } from "../../../shared/interfaces/modules/unit/useCases/IFetchAllUnitiesOfUserUseCase";
+import FetchAllUnitiesOfUserUseCase from "../useCases/fetch-all-unities-of-user-useCase";
 
-export default class CreateSessionCheckoutController implements IController {
+export default class FetchAllUnitiesOfUserController implements IController {
     public async execute(req: Request, res: Response): Promise<Response> {
         try {
-            // Lógica do Controller
-            const { planId } = req.body;
-            
             const token = req.headers["authorization"] as string;
 
-            const instanceOfCreateSessionCheckoutUseCase = container.resolve<ICreateSessionCheckoutUseCase>(CreateSessionCheckoutUseCase)
+            const instanceOfFetchAllUnitiesOfUserUseCase = container.resolve<IFetchAllUnitiesOfUserUseCase>(FetchAllUnitiesOfUserUseCase)
 
-            const url = await instanceOfCreateSessionCheckoutUseCase.execute(token, planId);
+            const unities = await instanceOfFetchAllUnitiesOfUserUseCase.execute(token);
 
-            return res.status(201).json({ message: "Checkout criado com sucesso", session: url });
+            return res.status(200).json(unities);
         } catch (error: any) {
             if (error.statusCode && error.message) {
                 return res.status(error.statusCode).json({ message: error.message });

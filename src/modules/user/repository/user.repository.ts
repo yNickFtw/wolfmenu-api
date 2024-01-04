@@ -27,7 +27,21 @@ export default class UserRepository implements IUserRepository {
         return
     }
 
-    public async update(user: Partial<IUser>): Promise<void> {
-        
+    public async updateByCustomerId(user: Partial<IUser>): Promise<void> {
+        await User.update(user, { where: { customerId: user.customerId } });
+
+        return;
+    }
+
+    public async update(user: Partial<IUser>, userId: string): Promise<void> {
+        await User.update(user, { where: { id: userId } });
+
+        return;
+    }
+
+    public async findByCustomerId(customerId: string): Promise<IUser | null> {
+        const user = await this.findByCustomerId(customerId);
+
+        return user as unknown as IUser;
     }
 }

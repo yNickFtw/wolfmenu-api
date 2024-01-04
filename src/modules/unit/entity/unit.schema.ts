@@ -41,6 +41,14 @@ const Unit = database.define('unit', {
         type: DataTypes.STRING(),
         allowNull: true,
     },
+    avatarImage: {
+        type: DataTypes.STRING(),
+        allowNull: true,
+    },
+    avatarImageFilename: {
+        type: DataTypes.STRING(),
+        allowNull: true
+    }
 })
 
 export { Unit };

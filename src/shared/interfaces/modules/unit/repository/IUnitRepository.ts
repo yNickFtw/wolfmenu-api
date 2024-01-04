@@ -6,4 +6,5 @@ export interface IUnitRepository {
     findByCNPJ(cnpj: string): Promise<IUnit | null>;
     countAllUnitiesOfUserByUserId(userId: string): Promise<number>
     findById(unitId: string): Promise<IUnit | null>;
+    findAllByUserId(userId: string): Promise<IUnit[] | []>;
 }

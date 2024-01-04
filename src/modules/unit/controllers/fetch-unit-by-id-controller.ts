@@ -1,19 +1,21 @@
 import { Request, Response } from "express";
 import { IController } from "../../../shared/interfaces/globals/IController";
 import { container } from "tsyringe";
-import { IStripeWebhookUseCase } from "../../../shared/interfaces/modules/stripe/useCases/IStripeWebhookUseCase";
-import StripeWebhookUseCase from "../useCases/stripe-webhook-useCase";
+import { IFetchUnitByIdUseCase } from "../../../shared/interfaces/modules/unit/useCases/IFetchUnitByIdUseCase";
+import FetchUnitByIdUseCase from "../useCases/fetch-unit-by-id-useCase";
 
-export default class StripeWebhookController implements IController {
-    public async execute(req: any, res: Response): Promise<Response> {
+export default class FetchUnitByIdController implements IController {
+    public async execute(req: Request, res: Response): Promise<Response> {
         try {
-            const sig = req.headers['stripe-signature'];
+            const token = req.headers["authorization"] as string;
 
-            const instanceOfStripeWebhookUseCase = container.resolve<IStripeWebhookUseCase>(StripeWebhookUseCase)
+            const { unitId } = req.params;
 
-            await instanceOfStripeWebhookUseCase.execute(req.rawBody, sig)
+            const instanceOfFetchUnitByIdUseCase = container.resolve<IFetchUnitByIdUseCase>(FetchUnitByIdUseCase)
 
-            return res.status(200).json({ message: "Evento escutado com sucesso!" });
+            const unit = await instanceOfFetchUnitByIdUseCase.execute(token, unitId);
+
+            return res.status(200).json(unit);
         } catch (error: any) {
             if (error.statusCode && error.message) {
                 return res.status(error.statusCode).json({ message: error.message });

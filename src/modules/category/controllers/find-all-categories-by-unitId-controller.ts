@@ -1,22 +1,21 @@
 import { Request, Response } from "express";
 import { IController } from "../../../shared/interfaces/globals/IController";
 import { container } from "tsyringe";
-import { ICreateSessionCheckoutUseCase } from "../../../shared/interfaces/modules/stripe/useCases/ICreateSessionCheckoutUseCase";
-import CreateSessionCheckoutUseCase from "../useCases/create-session-checkout-useCase";
+import { IFindAllCategoriesByUnitIdUseCase } from "../../../shared/interfaces/modules/category/useCases/IFindAllCategoriesByUnitIdUseCase";
+import FindAllCategoriesByUnitIdUseCase from "../useCases/find-all-categories-by-unitId-useCase";
 
-export default class CreateSessionCheckoutController implements IController {
+export default class FindAllCategoriesByUnitIdController implements IController {
     public async execute(req: Request, res: Response): Promise<Response> {
         try {
             // Lógica do Controller
-            const { planId } = req.body;
-            
+            const { unitId } = req.params
             const token = req.headers["authorization"] as string;
 
-            const instanceOfCreateSessionCheckoutUseCase = container.resolve<ICreateSessionCheckoutUseCase>(CreateSessionCheckoutUseCase)
+            const instanceOfFindAllCategoriesByUnitIdUseCase = container.resolve<IFindAllCategoriesByUnitIdUseCase>(FindAllCategoriesByUnitIdUseCase)
 
-            const url = await instanceOfCreateSessionCheckoutUseCase.execute(token, planId);
+            const categories = await instanceOfFindAllCategoriesByUnitIdUseCase.execute(token, unitId);
 
-            return res.status(201).json({ message: "Checkout criado com sucesso", session: url });
+            return res.status(200).json(categories);
         } catch (error: any) {
             if (error.statusCode && error.message) {
                 return res.status(error.statusCode).json({ message: error.message });

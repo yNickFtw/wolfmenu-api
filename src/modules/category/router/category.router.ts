@@ -2,6 +2,7 @@ import { IRouter } from "../../../shared/interfaces/globals/IRouter";
 import { Router } from "express";
 import CreateCategoryController from "../controllers/create-category-controller";
 import AuthGuardMiddleware from "../../../shared/middlewares/AuthGuardMiddleware/auth-guard-middleware";
+import FindAllCategoriesByUnitIdController from "../controllers/find-all-categories-by-unitId-controller";
 
 
 export default class CategoryRouter implements IRouter {
@@ -10,7 +11,9 @@ export default class CategoryRouter implements IRouter {
     constructor() {
         this.router = Router()
         this.router.post('/create/:unitId', new AuthGuardMiddleware().execute, new CreateCategoryController().execute);
-        //@NewController
+        this.router.get('/find/all/:unitId', new AuthGuardMiddleware().execute, new FindAllCategoriesByUnitIdController().execute);
+    //@NewController
+    
 
     }
 

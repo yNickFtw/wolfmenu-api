@@ -50,7 +50,7 @@ export default class CreateSessionCheckoutUseCase implements ICreateSessionCheck
         let customerId: string;
 
         const customers = await stripe.customers.search({
-            query: "metadata[ref]: " + user.id
+            query: "metadata['ref']: '" + user.id + "'"
         })
 
         if(customers.data.length === 0) {
@@ -71,7 +71,7 @@ export default class CreateSessionCheckoutUseCase implements ICreateSessionCheck
             if(customer && customer.id) {
                 customerId = customer.id
 
-                await this.UserRepository.update({ customerId: customerId });
+                await this.UserRepository.update({ customerId: customerId }, userId);
             }
         } else {
             customerId = customers.data[0].id
@@ -87,7 +87,7 @@ export default class CreateSessionCheckoutUseCase implements ICreateSessionCheck
             ],
             mode: "subscription",
             cancel_url: process.env.CLIENT_URL + '/plans',
-            success_url: process.env.CLIENT_URL + '/success/thanks'
+            success_url: process.env.CLIENT_URL + '/'
         })
 
         return session.url;

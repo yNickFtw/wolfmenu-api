@@ -11,5 +11,7 @@ export interface IUnit {
     state: string;
     zip_code: string;
     userId: string;
+    avatarImage: string;
+    avatarImageFilename: string;
     user: Partial<IUser>;
 }

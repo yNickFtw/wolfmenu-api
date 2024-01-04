@@ -1,6 +1,8 @@
 import { IPlan } from "../../../shared/interfaces/modules/plan/IPlan";
 import { IPlanRepository } from "../../../shared/interfaces/modules/plan/repository/IPlanRepository";
 import { Plan } from "../entity/plan.schema";
+import database from "../../../database/config";
+import { QueryTypes } from "sequelize";
 
 export default class PlanRepository implements IPlanRepository {
     public async create(plan: Partial<IPlan>): Promise<void> {
@@ -28,9 +30,7 @@ export default class PlanRepository implements IPlanRepository {
     }
 
     public async findAll(): Promise<IPlan[] | []> {
-        const plans = await Plan.findAll({
-            order: [['price', 'ASC']]
-        });
+        const plans = await database.query("SELECT * FROM plans", { type: QueryTypes.SELECT })
     
         return plans as unknown as IPlan[];
     }
