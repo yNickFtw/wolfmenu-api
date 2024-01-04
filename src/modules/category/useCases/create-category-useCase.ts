@@ -29,8 +29,8 @@ export default class CreateCategoryUseCase implements ICreateCategoryUseCase, IA
         this.message = "";
     }
 
-    public async execute(name: string, description: string, unitId: string, token: string): Promise<void> {
-        if (!name || !description || !unitId) {
+    public async execute(name: string, unitId: string, token: string): Promise<void> {
+        if (!name || !unitId) {
             const error: IAppError = {
                 statusCode: 400,
                 message: "Preencha todos os campos."
@@ -67,7 +67,6 @@ export default class CreateCategoryUseCase implements ICreateCategoryUseCase, IA
 
         const category: Partial<ICategory> = {
             name,
-            description,
             unitId,
             userId
         }

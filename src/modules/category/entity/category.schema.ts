@@ -13,10 +13,6 @@ const Category = database.define('category', {
         type: DataTypes.STRING(20),
         allowNull: false
     },
-    description: {
-        type: DataTypes.TEXT(),
-        allowNull: false,
-    },
     isAvailable: {
         type: DataTypes.BOOLEAN(),
         allowNull: false,
