@@ -7,10 +7,21 @@ import CreateProductUseCase from "../useCases/create-product-useCase";
 export default class CreateProductController implements IController {
     public async execute(req: Request, res: Response): Promise<Response> {
         try {
-            // Lógica do Controller
-            const instanceOfCreateProductUseCase = container.resolve<ICreateProductUseCase>(CreateProductUseCase)
+            const { name, description, categoryId } = req.body;
 
-            return res.status(200).json();
+            const token = req.headers["authorization"] as string;
+            
+            const instanceOfCreateProductUseCase = container.resolve<ICreateProductUseCase>(CreateProductUseCase)
+            
+            const file: Express.Multer.File | undefined = req.file;
+
+            if(!file) {
+                return res.status(400).json({ message: "Você precisa adicionar uma imagem para este produto!" })
+            }
+
+            await instanceOfCreateProductUseCase.execute(name, description, categoryId, file, token)
+
+            return res.status(200).json({ message: "Produto criado com sucesso!" });
         } catch (error: any) {
             if (error.statusCode && error.message) {
                 return res.status(error.statusCode).json({ message: error.message });

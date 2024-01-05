@@ -13,6 +13,12 @@ import { ICategoryRepository } from '../interfaces/modules/category/repository/I
 import CategoryRepository from '../../modules/category/repository/category.repository'
 import { IProductRepository } from '../interfaces/modules/product/repository/IProductRepository'
 import ProductRepository from '../../modules/product/repository/product.repository'
+import { IProductsVariationsRepository } from '../interfaces/modules/products-variations/repository/IProductsVariationsRepository'
+import ProductsVariationsRepository from '../../modules/products-variations/repository/products-variations.repository'
+import { IMenuRepository } from '../interfaces/modules/menu/repository/IMenuRepository'
+import MenuRepository from '../../modules/menu/repository/menu.repository'
+import { IMenuItemRepository } from '../interfaces/modules/menu-item/repository/IMenuItemRepository'
+import MenuItemRepository from '../../modules/menu-item/repository/menu-item.repository'
 //@ImportInjection
 
 // @Imports Routes
@@ -22,6 +28,9 @@ import PlanRouter from '../../modules/plan/router/plan.router'
 import StripeRouter from '../../modules/stripe/router/stripe.router'
 import CategoryRouter from '../../modules/category/router/category.router'
 import ProductRouter from '../../modules/product/router/product.router'
+import ProductsVariationsRouter from '../../modules/products-variations/router/products-variations.router'
+import MenuRouter from '../../modules/menu/router/menu.router'
+import MenuItemRouter from '../../modules/menu-item/router/menu-item.router'
 //@ImportRouter
 
 import JWTService from '../services/JWTService/JWTService';
@@ -47,23 +56,38 @@ container.register<IUnitRepository>(
 )
 
 container.register<IPlanRepository>(
-"PlanRepository",
-PlanRepository
+  "PlanRepository",
+  PlanRepository
 )
 
 container.register<IStripeRepository>(
-"StripeRepository",
-StripeRepository
+  "StripeRepository",
+  StripeRepository
 )
 
 container.register<ICategoryRepository>(
-"CategoryRepository",
-CategoryRepository
+  "CategoryRepository",
+  CategoryRepository
 )
 
 container.register<IProductRepository>(
-"ProductRepository",
-ProductRepository
+  "ProductRepository",
+  ProductRepository
+)
+
+container.register<IProductsVariationsRepository>(
+  "ProductsVariationsRepository",
+  ProductsVariationsRepository
+)
+
+container.register<IMenuRepository>(
+  "MenuRepository",
+  MenuRepository
+)
+
+container.register<IMenuItemRepository>(
+"MenuItemRepository",
+MenuItemRepository
 )
 //@InjectionDependecy
 
@@ -97,6 +121,21 @@ container.register<IRouter>(
 container.register<IRouter>(
   "ProductRouter",
   ProductRouter
+)
+
+container.register<IRouter>(
+  "ProductsVariationsRouter",
+  ProductsVariationsRouter
+)
+
+container.register<IRouter>(
+  "MenuRouter",
+  MenuRouter
+)
+
+container.register<IRouter>(
+  "MenuItemRouter",
+  MenuItemRouter
 )
 //@RouterInjection
 

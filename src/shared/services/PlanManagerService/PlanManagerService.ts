@@ -21,9 +21,7 @@ export default class PlanManagerService implements IPlanManagerService {
         private CategoryRepository: ICategoryRepository,
         @inject("ProductRepository")
         private ProductRepository: IProductRepository
-    ) {
-
-    }
+    ){}
 
     public async canUserCreateAUnit(plan: string, planStatus: string, userId: string): Promise<boolean> {
         const userUnitiesQtd = await this.UnitRepository.countAllUnitiesOfUserByUserId(userId);
@@ -49,58 +47,58 @@ export default class PlanManagerService implements IPlanManagerService {
     }
 
 
-    public async canUserCreateAProductWithCategoryId(plan: string, planStatus: string, categoryId: string): Promise<boolean> {
-        const productsQtd = await this.ProductRepository.countAllProductsByCategoryId(categoryId);
+    // public async canUserCreateAProductWithCategoryId(plan: string, planStatus: string, categoryId: string): Promise<boolean> {
+    //     const productsQtd = await this.ProductRepository.countAllProductsByCategoryId(categoryId);
 
-        const planDB = await this.PlanRepository.findByName(plan);
+    //     const planDB = await this.PlanRepository.findByName(plan);
 
-        if (!planDB) {
-            const error: IAppError = {
-                statusCode: 404,
-                message: "Plano não encontrado."
-            };
+    //     if (!planDB) {
+    //         const error: IAppError = {
+    //             statusCode: 404,
+    //             message: "Plano não encontrado."
+    //         };
 
-            throw error;
-        }
+    //         throw error;
+    //     }
 
-        if (productsQtd >= planDB?.quantityLimitProduct) {
-            return false;
-        } else if (productsQtd <= planDB.quantityLimitProduct && planStatus !== "ACTIVE") {
-            return false
-        } else {
-            return true
-        }
-    }
+    //     if (productsQtd >= planDB?.quantityLimitProduct) {
+    //         return false;
+    //     } else if (productsQtd <= planDB.quantityLimitProduct && planStatus !== "ACTIVE") {
+    //         return false
+    //     } else {
+    //         return true
+    //     }
+    // }
 
-    public async canUserCreateACategoryByUnit(plan: string, planStatus: string, unitId: string): Promise<boolean> {
-        const categoriesQtd = await this.CategoryRepository.countCategoriesByUnitId(unitId);
+    // public async canUserCreateACategoryByUnit(plan: string, planStatus: string, unitId: string): Promise<boolean> {
+    //     const categoriesQtd = await this.CategoryRepository.countCategoriesByUnitId(unitId);
 
-        const planDB = await this.PlanRepository.findByName(plan);
+    //     const planDB = await this.PlanRepository.findByName(plan);
 
-        if (!planDB) {
-            const error: IAppError = {
-                statusCode: 404,
-                message: "Plano não encontrado."
-            };
+    //     if (!planDB) {
+    //         const error: IAppError = {
+    //             statusCode: 404,
+    //             message: "Plano não encontrado."
+    //         };
 
-            throw error;
-        }
+    //         throw error;
+    //     }
 
-        if (categoriesQtd >= planDB.quantityLimitCategory) {
-            return false;
-        } else if (categoriesQtd <= planDB.quantityLimitCategory && planStatus !== "ACTIVE") {
-            return false
-        } else {
-            return true
-        }
-    }
+    //     if (categoriesQtd >= planDB.quantityLimitCategory) {
+    //         return false;
+    //     } else if (categoriesQtd <= planDB.quantityLimitCategory && planStatus !== "ACTIVE") {
+    //         return false
+    //     } else {
+    //         return true
+    //     }
+    // }
 
-    public async canUserCreateAUserWithUnitId(plan: string, planStatus: string, userId: string, unitId: string): Promise<boolean> {
-        return false
-    }
+    // public async canUserCreateAUserWithUnitId(plan: string, planStatus: string, userId: string, unitId: string): Promise<boolean> {
+    //     return false
+    // }
 
-    public async canUserCreateLinkToUnitId(plan: string, planStatus: string, userId: string, unitId: string): Promise<boolean> {
-        return false
-    }
+    // public async canUserCreateLinkToUnitId(plan: string, planStatus: string, userId: string, unitId: string): Promise<boolean> {
+    //     return false
+    // }
 
 }

@@ -20,4 +20,10 @@ export default class ProductRepository implements IProductRepository {
 
         return productsQtd;
     }
+
+    public async findById(productId: string): Promise<IProduct | null> {
+        const product = await Product.findOne({ where: { id: productId } });
+
+        return product as unknown as IProduct;
+    }
 }

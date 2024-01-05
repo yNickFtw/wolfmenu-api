@@ -1,20 +1,19 @@
 import { Request, Response } from "express";
 import { IController } from "../../../shared/interfaces/globals/IController";
 import { container } from "tsyringe";
-import { ICreateCategoryUseCase } from "../../../shared/interfaces/modules/category/useCases/ICreateCategoryUseCase";
-import CreateCategoryUseCase from "../useCases/create-category-useCase";
+import { IFetchAllProductsVariationsUseCase } from "../../../shared/interfaces/modules/products-variations/useCases/IFetchAllProductsVariationsUseCase";
+import FetchAllProductsVariationsUseCase from "../useCases/fetch-all-products-variations-useCase";
 
-export default class CreateCategoryController implements IController {
+export default class FetchAllProductsVariationsController implements IController {
     public async execute(req: Request, res: Response): Promise<Response> {
         try {
-            // Lógica do Controller
-            const { name } = req.body
-            
-            const instanceOfCreateCategoryUseCase = container.resolve<ICreateCategoryUseCase>(CreateCategoryUseCase)
+            const token = req.headers["authorization"] as string;
 
-            await instanceOfCreateCategoryUseCase.execute(name, req.headers["authorization"]!);
+            const instanceOfFetchAllProductsVariationsUseCase = container.resolve<IFetchAllProductsVariationsUseCase>(FetchAllProductsVariationsUseCase)
 
-            return res.status(201).json({ message: "Categoria criada com sucesso" });
+            const productsVariations = await instanceOfFetchAllProductsVariationsUseCase.execute(token);
+
+            return res.status(200).json(productsVariations);
         } catch (error: any) {
             if (error.statusCode && error.message) {
                 return res.status(error.statusCode).json({ message: error.message });

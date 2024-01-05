@@ -2,29 +2,25 @@ import { DataTypes } from 'sequelize'
 import database from "../../../database/config";
 import { UUIDV4 } from 'sequelize';
 
-const Product = database.define('product', {
+const ProductsVariations = database.define('products_variations', {
     id: {
         type: DataTypes.UUID,
-        allowNull: false,
         primaryKey: true,
+        allowNull: false,
         defaultValue: UUIDV4
     },
     name: {
-        type: DataTypes.STRING(20),
-        allowNull: false
+        type: DataTypes.STRING(),
+        allowNull: false,
     },
     description: {
-        type: DataTypes.TEXT(),
-        allowNull: false
-    },
-    productImage: {
         type: DataTypes.STRING(),
-        allowNull: false
+        allowNull: true,
     },
-    productImageFilename: {
+    price: {
         type: DataTypes.STRING(),
-        allowNull: false
-    },
+        allowNull: false,
+    }
 })
 
-export { Product };
+export { ProductsVariations };
