@@ -26,7 +26,7 @@ export default class CreateCategoryUseCase implements ICreateCategoryUseCase, IA
         this.message = "";
     }
 
-    public async execute(name: string, token: string): Promise<void> {
+    public async execute(name: string, unitId: string, token: string): Promise<void> {
         if (!name) {
             const error: IAppError = {
                 statusCode: 400,
@@ -38,8 +38,29 @@ export default class CreateCategoryUseCase implements ICreateCategoryUseCase, IA
 
         const { userId } = this.JWTService.decodeToken(token, true);
 
+        const unit = await this.UnitRepository.findById(unitId);
+        
+        if(!unit) {
+            const error: IAppError = {
+                statusCode: 404,
+                message: "Unidade não encontrada"
+            };
+
+            throw error;
+        }
+
+        if(unit.userId !== userId) {
+            const error: IAppError = {
+                statusCode: 403,
+                message: "Você não tem permissão para criar uma categoria nesta unidade."
+            };
+
+            throw error;
+        }
+
         const category: Partial<ICategory> = {
             name,
+            unitId,
             userId
         }
         

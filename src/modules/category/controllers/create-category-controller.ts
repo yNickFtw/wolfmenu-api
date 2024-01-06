@@ -10,9 +10,11 @@ export default class CreateCategoryController implements IController {
             // Lógica do Controller
             const { name } = req.body
             
+            const { unitId } = req.params
+
             const instanceOfCreateCategoryUseCase = container.resolve<ICreateCategoryUseCase>(CreateCategoryUseCase)
 
-            await instanceOfCreateCategoryUseCase.execute(name, req.headers["authorization"]!);
+            await instanceOfCreateCategoryUseCase.execute(name, unitId, req.headers["authorization"]!);
 
             return res.status(201).json({ message: "Categoria criada com sucesso" });
         } catch (error: any) {

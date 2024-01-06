@@ -35,7 +35,7 @@ export default class UnitRepository implements IUnitRepository {
     }
 
     public async findAllByUserId(userId: string): Promise<IUnit[] | []> {
-        const unities = await Unit.findAll({ where: { userId: userId }, include: { model: User, attributes: { exclude: ["password"] } } });
+        const unities = await Unit.findAndCountAll({ where: { userId: userId } });
 
         return unities as unknown as IUnit[];
     }

@@ -16,9 +16,6 @@ import ProductRepository from '../../modules/product/repository/product.reposito
 import { IProductsVariationsRepository } from '../interfaces/modules/products-variations/repository/IProductsVariationsRepository'
 import ProductsVariationsRepository from '../../modules/products-variations/repository/products-variations.repository'
 import { IMenuRepository } from '../interfaces/modules/menu/repository/IMenuRepository'
-import MenuRepository from '../../modules/menu/repository/menu.repository'
-import { IMenuItemRepository } from '../interfaces/modules/menu-item/repository/IMenuItemRepository'
-import MenuItemRepository from '../../modules/menu-item/repository/menu-item.repository'
 //@ImportInjection
 
 // @Imports Routes
@@ -29,8 +26,6 @@ import StripeRouter from '../../modules/stripe/router/stripe.router'
 import CategoryRouter from '../../modules/category/router/category.router'
 import ProductRouter from '../../modules/product/router/product.router'
 import ProductsVariationsRouter from '../../modules/products-variations/router/products-variations.router'
-import MenuRouter from '../../modules/menu/router/menu.router'
-import MenuItemRouter from '../../modules/menu-item/router/menu-item.router'
 //@ImportRouter
 
 import JWTService from '../services/JWTService/JWTService';
@@ -79,16 +74,6 @@ container.register<IProductsVariationsRepository>(
   "ProductsVariationsRepository",
   ProductsVariationsRepository
 )
-
-container.register<IMenuRepository>(
-  "MenuRepository",
-  MenuRepository
-)
-
-container.register<IMenuItemRepository>(
-"MenuItemRepository",
-MenuItemRepository
-)
 //@InjectionDependecy
 
 // @Routers
@@ -126,16 +111,6 @@ container.register<IRouter>(
 container.register<IRouter>(
   "ProductsVariationsRouter",
   ProductsVariationsRouter
-)
-
-container.register<IRouter>(
-  "MenuRouter",
-  MenuRouter
-)
-
-container.register<IRouter>(
-  "MenuItemRouter",
-  MenuItemRouter
 )
 //@RouterInjection
 

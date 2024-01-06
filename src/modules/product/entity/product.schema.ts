@@ -25,6 +25,11 @@ const Product = database.define('product', {
         type: DataTypes.STRING(),
         allowNull: false
     },
+    isAvailable: {
+        type: DataTypes.BOOLEAN(),
+        allowNull: false,
+        defaultValue: true
+    }
 })
 
 export { Product };
