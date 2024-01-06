@@ -11,9 +11,11 @@ export default class FindAllCategoriesByUnitIdController implements IController 
             const { unitId } = req.params
             const token = req.headers["authorization"] as string;
 
+            const { page } = req.params;
+
             const instanceOfFindAllCategoriesByUnitIdUseCase = container.resolve<IFindAllCategoriesByUnitIdUseCase>(FindAllCategoriesByUnitIdUseCase)
 
-            const categories = await instanceOfFindAllCategoriesByUnitIdUseCase.execute(token, unitId);
+            const categories = await instanceOfFindAllCategoriesByUnitIdUseCase.execute(token, unitId, parseInt(page));
 
             return res.status(200).json(categories);
         } catch (error: any) {

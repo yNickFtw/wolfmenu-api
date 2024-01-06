@@ -4,6 +4,7 @@ import { IFindAllCategoriesByUnitIdUseCase } from "../../../shared/interfaces/mo
 import { IUnitRepository } from "../../../shared/interfaces/modules/unit/repository/IUnitRepository";
 import { ICategoryRepository } from "../../../shared/interfaces/modules/category/repository/ICategoryRepository";
 import { ICategory } from "../../../shared/interfaces/modules/category/ICategory";
+import { FindAllCategoriesByUnitIdDTO } from "../../../shared/interfaces/modules/category/promise/FindAllCategoriesByUnitIdDTO";
 
 @injectable()
 export default class FindAllCategoriesByUnitIdUseCase implements IFindAllCategoriesByUnitIdUseCase, IAppError {
@@ -20,11 +21,10 @@ export default class FindAllCategoriesByUnitIdUseCase implements IFindAllCategor
         this.message = "";
     }
 
-    public async execute(token: string, unitId: string): Promise<any> {
+    public async execute(token: string, unitId: string, page: number): Promise<FindAllCategoriesByUnitIdDTO> {
         // Lógica do Caso de Uso
-        const categories = await this.CategoryRepository.findAllCategoriesByUnitId(unitId);
+        const { rows: categories, count: totalCount } = await this.CategoryRepository.findAllCategoriesByUnitId(unitId, page, 10);
 
-        return categories;
-
+        return { categories, totalCount };
     }
 }
