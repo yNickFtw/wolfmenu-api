@@ -17,7 +17,7 @@ export default class SMTPService implements ISMTPService {
         );
 
         transporter.sendMail({
-            from: "WolfSoftwares <contato.wolfsoftwares@gmail.com>",
+            from: "WolfMenu <wolfmenubr@gmail.com>",
             to: `${toEmail}`,
             subject: `${subject}`,
             html: `${html}`

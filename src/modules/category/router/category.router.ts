@@ -9,8 +9,8 @@ export default class CategoryRouter implements IRouter {
 
     constructor() {
         this.router = Router()
-        this.router.post('/create', new AuthGuardMiddleware().execute, new CreateCategoryController().execute);
-        // this.router.get('/find/all/:unitId', new AuthGuardMiddleware().execute, new FindAllCategoriesByUnitIdController().execute);
+        this.router.post('/create/:unitId', new AuthGuardMiddleware().execute, new CreateCategoryController().execute);
+        this.router.get('/find/all/:unitId/:page', new AuthGuardMiddleware().execute, new FindAllCategoriesByUnitIdController().execute);
         //@NewController
 
     }

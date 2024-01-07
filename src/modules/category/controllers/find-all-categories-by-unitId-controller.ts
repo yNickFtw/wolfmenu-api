@@ -8,10 +8,8 @@ export default class FindAllCategoriesByUnitIdController implements IController 
     public async execute(req: Request, res: Response): Promise<Response> {
         try {
             // Lógica do Controller
-            const { unitId } = req.params
+            const { unitId, page } = req.params
             const token = req.headers["authorization"] as string;
-
-            const { page } = req.params;
 
             const instanceOfFindAllCategoriesByUnitIdUseCase = container.resolve<IFindAllCategoriesByUnitIdUseCase>(FindAllCategoriesByUnitIdUseCase)
 
