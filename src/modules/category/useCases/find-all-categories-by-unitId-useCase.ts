@@ -52,7 +52,7 @@ export default class FindAllCategoriesByUnitIdUseCase implements IFindAllCategor
             throw error;
         }
 
-        const { rows: categories, count: totalCount } = await this.CategoryRepository.findAllCategoriesByUnitId(unitId, page, 5);
+        const { rows: categories, count: totalCount } = await this.CategoryRepository.findAllCategoriesByUnitId(unitId, page, 6);
 
         return { categories, totalCount };
     }
