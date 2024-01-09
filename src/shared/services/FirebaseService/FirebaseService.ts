@@ -13,11 +13,11 @@ export default class FirebaseService implements IFirebaseService {
         this.firebaseStorage = getStorage(this.firebaseApp);
     }
 
-    public async uploadImage(filename: string, folder: string, file: Express.Multer.File): Promise<string> {
+    public async uploadImage(filename: string, folder: string, buffer: Buffer, mimetype: string): Promise<string> {
         const storageRef = ref(this.firebaseStorage, `${folder}/${filename}.png`);
 
-        await uploadBytes(storageRef, file.buffer, {
-            contentType: file.mimetype
+        await uploadBytes(storageRef, buffer, {
+            contentType: mimetype
         })
         
         const url = await getDownloadURL(storageRef)

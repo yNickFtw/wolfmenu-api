@@ -1,21 +1,21 @@
 import { Request, Response } from "express";
 import { IController } from "../../../shared/interfaces/globals/IController";
 import { container } from "tsyringe";
-import { IFindAllCategoriesByUnitIdUseCase } from "../../../shared/interfaces/modules/category/useCases/IFindAllCategoriesByUnitIdUseCase";
-import FindAllCategoriesByUnitIdUseCase from "../useCases/find-all-categories-by-unitId-useCase";
+import { IDashboardInfoUseCase } from "../../../shared/interfaces/modules/unit/useCases/IDashboardInfoUseCase";
+import DashboardInfoUseCase from "../useCases/dashboard-info-useCase";
 
-export default class FindAllCategoriesByUnitIdController implements IController {
+export default class DashboardInfoController implements IController {
     public async execute(req: Request, res: Response): Promise<Response> {
         try {
-            // Lógica do Controller
-            const { unitId, page, totalRows } = req.params
+            const { unitId } = req.params
+            
             const token = req.headers["authorization"] as string;
 
-            const instanceOfFindAllCategoriesByUnitIdUseCase = container.resolve<IFindAllCategoriesByUnitIdUseCase>(FindAllCategoriesByUnitIdUseCase)
+            const instanceOfDashboardInfoUseCase = container.resolve<IDashboardInfoUseCase>(DashboardInfoUseCase)
 
-            const categories = await instanceOfFindAllCategoriesByUnitIdUseCase.execute(token, unitId, parseInt(page), parseInt(totalRows));
+            const data = await instanceOfDashboardInfoUseCase.execute(token, unitId);
 
-            return res.status(200).json(categories);
+            return res.status(200).json(data);
         } catch (error: any) {
             if (error.statusCode && error.message) {
                 return res.status(error.statusCode).json({ message: error.message });

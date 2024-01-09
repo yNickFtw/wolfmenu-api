@@ -27,7 +27,7 @@ export default class FindAllCategoriesByUnitIdUseCase implements IFindAllCategor
         this.message = "";
     }
 
-    public async execute(token: string, unitId: string, page: number): Promise<FindAllCategoriesByUnitIdDTO> {
+    public async execute(token: string, unitId: string, page: number, totalRows: number): Promise<FindAllCategoriesByUnitIdDTO> {
         const { userId } = this.JWTService.decodeToken(token, true);
 
         const user = await this.UserRepository.findById(userId);
@@ -52,7 +52,7 @@ export default class FindAllCategoriesByUnitIdUseCase implements IFindAllCategor
             throw error;
         }
 
-        const { rows: categories, count: totalCount } = await this.CategoryRepository.findAllCategoriesByUnitId(unitId, page, 6);
+        const { rows: categories, count: totalCount } = await this.CategoryRepository.findAllCategoriesByUnitId(unitId, page, totalRows);
 
         return { categories, totalCount };
     }

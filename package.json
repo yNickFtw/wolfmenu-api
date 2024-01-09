@@ -28,6 +28,7 @@
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.34.0",
     "sequelize-cli": "^6.6.2",
+    "sharp": "^0.33.1",
     "stripe": "^14.10.0",
     "ts-node": "^10.9.1",
     "tsyringe": "^4.8.0",

@@ -8,6 +8,8 @@ import StripeRouter from "../../modules/stripe/router/stripe.router";
 import CategoryRouter from "../../modules/category/router/category.router";
 import ProductRouter from "../../modules/product/router/product.router";
 import ProductsVariationsRouter from "../../modules/products-variations/router/products-variations.router";
+import MenuRouter from "../../modules/menu/router/menu.router";
+import MenuItemRouter from "../../modules/menu-item/router/menu-item.router";
 //@ImportRouter
 
 export default class MainRouter implements IRouter {
@@ -21,6 +23,8 @@ export default class MainRouter implements IRouter {
         private categoryRouter = container.resolve<IRouter>(CategoryRouter),
         private productRouter = container.resolve<IRouter>(ProductRouter),
         private productsVariationsRouter = container.resolve<IRouter>(ProductsVariationsRouter),
+        private menuRouter = container.resolve<IRouter>(MenuRouter),
+        private menuItemRouter = container.resolve<IRouter>(MenuItemRouter),
         //@InstanceRouter
 
     ) {
@@ -32,6 +36,8 @@ export default class MainRouter implements IRouter {
         this.router.use('/categories', this.categoryRouter.init());
         this.router.use('/products', this.productRouter.init());
         this.router.use('/products/variations', this.productsVariationsRouter.init());
+        this.router.use('/menu', this.menuRouter.init());
+        this.router.use('/menu-items', this.menuItemRouter.init());
         //@NewInitInstance
     }
 

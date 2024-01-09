@@ -6,4 +6,5 @@ export interface IProduct {
   productImageFilename: string;
   userId: string;
   categoryId: string;
+  unitId: string
 }

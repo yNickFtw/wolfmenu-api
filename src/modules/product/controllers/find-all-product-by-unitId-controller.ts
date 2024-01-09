@@ -1,25 +1,21 @@
 import { Request, Response } from "express";
 import { IController } from "../../../shared/interfaces/globals/IController";
 import { container } from "tsyringe";
-import { ICreateProductUseCase } from "../../../shared/interfaces/modules/product/useCases/ICreateProductUseCase";
-import CreateProductUseCase from "../useCases/create-product-useCase";
+import { IFindAllProductsByUnitIdUseCase } from "../../../shared/interfaces/modules/product/useCases/IFindAllProductsByUnitIdUseCase";
+import FindAllProductsByUnitIdUseCase from "../useCases/find-all-product-by-unitId-useCase";
 
-export default class CreateProductController implements IController {
+export default class FindAllProductsByUnitIdController implements IController {
     public async execute(req: Request, res: Response): Promise<Response> {
         try {
-            const { name, description, categoryId } = req.body;
-
-            const { unitId } = req.params;
+            const { unitId, page, totalRows } = req.params
 
             const token = req.headers["authorization"] as string;
-            
-            const instanceOfCreateProductUseCase = container.resolve<ICreateProductUseCase>(CreateProductUseCase)
-            
-            const file: Express.Multer.File | undefined = req.file;
 
-            const data = await instanceOfCreateProductUseCase.execute(name, description,  categoryId, unitId, file, token)
+            const instanceOfFindAllProductsByUnitIdUseCase = container.resolve<IFindAllProductsByUnitIdUseCase>(FindAllProductsByUnitIdUseCase)
 
-            return res.status(201).json({ message: "Produto criado com sucesso!", product: data });
+            const products = await instanceOfFindAllProductsByUnitIdUseCase.execute(token, unitId, parseInt(page), parseInt(totalRows));
+
+            return res.status(200).json(products);
         } catch (error: any) {
             if (error.statusCode && error.message) {
                 return res.status(error.statusCode).json({ message: error.message });

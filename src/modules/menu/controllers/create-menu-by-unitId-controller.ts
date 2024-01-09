@@ -1,21 +1,25 @@
 import { Request, Response } from "express";
 import { IController } from "../../../shared/interfaces/globals/IController";
 import { container } from "tsyringe";
-import { IFindAllCategoriesByUnitIdUseCase } from "../../../shared/interfaces/modules/category/useCases/IFindAllCategoriesByUnitIdUseCase";
-import FindAllCategoriesByUnitIdUseCase from "../useCases/find-all-categories-by-unitId-useCase";
+import { ICreateMenuByUnitIdUseCase } from "../../../shared/interfaces/modules/menu/useCases/ICreateMenuByUnitIdUseCase";
+import CreateMenuByUnitIdUseCase from "../useCases/create-menu-by-unitId-useCase";
 
-export default class FindAllCategoriesByUnitIdController implements IController {
+export default class CreateMenuByUnitIdController implements IController {
     public async execute(req: Request, res: Response): Promise<Response> {
         try {
-            // Lógica do Controller
-            const { unitId, page, totalRows } = req.params
+            const { description, bannerColor } = req.body
+
             const token = req.headers["authorization"] as string;
 
-            const instanceOfFindAllCategoriesByUnitIdUseCase = container.resolve<IFindAllCategoriesByUnitIdUseCase>(FindAllCategoriesByUnitIdUseCase)
+            const { unitId } = req.params;
 
-            const categories = await instanceOfFindAllCategoriesByUnitIdUseCase.execute(token, unitId, parseInt(page), parseInt(totalRows));
+            const file = req.file;
 
-            return res.status(200).json(categories);
+            const instanceOfCreateMenuByUnitIdUseCase = container.resolve<ICreateMenuByUnitIdUseCase>(CreateMenuByUnitIdUseCase)
+
+            await instanceOfCreateMenuByUnitIdUseCase.execute(token, description, bannerColor, file, unitId);
+
+            return res.status(201).json({ message: "Cardápio criado com sucesso." });
         } catch (error: any) {
             if (error.statusCode && error.message) {
                 return res.status(error.statusCode).json({ message: error.message });

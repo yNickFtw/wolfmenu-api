@@ -8,6 +8,7 @@ import { IUnitRepository } from "../../../shared/interfaces/modules/unit/reposit
 import { IProduct } from "../../../shared/interfaces/modules/product/IProduct";
 import { v4 as uuidv4 } from 'uuid';
 import { IFirebaseService } from "../../../shared/services/FirebaseService/IFirebaseService";
+import sharp from "sharp";
 
 @injectable()
 export default class CreateProductUseCase implements ICreateProductUseCase, IAppError {
@@ -30,7 +31,7 @@ export default class CreateProductUseCase implements ICreateProductUseCase, IApp
         this.message = "";
     }
 
-    public async execute(name: string, description: string, categoryId: string, file: Express.Multer.File, token: string): Promise<void> {
+    public async execute(name: string, description: string, categoryId: string, unitId: string, file: Express.Multer.File | undefined, token: string): Promise<IProduct> {
         if (!name || !description || !categoryId) {
             const error: IAppError = {
                 statusCode: 400,
@@ -49,11 +50,22 @@ export default class CreateProductUseCase implements ICreateProductUseCase, IApp
             throw error;
         }
 
+        const unit = await this.UnitRepository.findById(unitId);
+
+        if (!unit) {
+            const error: IAppError = {
+                statusCode: 404,
+                message: "Unidade não encontrada."
+            };
+
+            throw error;
+        }
+
         const { userId } = this.JWTService.decodeToken(token, true);
 
         const productImageFilename = uuidv4();
-
-        const productImage = await this.FirebaseService.uploadImage(productImageFilename, 'products', file)
+        const compressedImageBuffer = await sharp(file.buffer).jpeg({ quality: 80 }).toBuffer();
+        const productImage = await this.FirebaseService.uploadImage(productImageFilename, 'products', compressedImageBuffer, file.mimetype)
 
         const product: Partial<IProduct> = {
             name,
@@ -62,10 +74,11 @@ export default class CreateProductUseCase implements ICreateProductUseCase, IApp
             productImageFilename: productImageFilename,
             userId: userId,
             categoryId: categoryId,
+            unitId: unitId
         }
 
-        await this.ProductRepository.create(product);
+        const productCreated = await this.ProductRepository.create(product);
 
-        return;
+        return product as IProduct
     }
 }

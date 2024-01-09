@@ -5,6 +5,7 @@ import { container } from "tsyringe";
 import AuthGuardMiddleware from "../../../shared/middlewares/AuthGuardMiddleware/auth-guard-middleware";
 import FetchAllUnitiesOfUserController from "../controllers/fetch-all-unities-of-user-controller";
 import FetchUnitByIdController from "../controllers/fetch-unit-by-id-controller";
+import DashboardInfoController from "../controllers/dashboard-info-controller";
 
 export default class UnitRouter implements IRouter {
     router: Router;
@@ -14,8 +15,8 @@ export default class UnitRouter implements IRouter {
         this.router.post('/create', new AuthGuardMiddleware().execute, new CreateUnitController().execute);
         this.router.get('/find/all', new AuthGuardMiddleware().execute, new FetchAllUnitiesOfUserController().execute);
         this.router.get('/find/:unitId', new AuthGuardMiddleware().execute, new FetchUnitByIdController().execute);
+        this.router.get('/dashboard/infos/:unitId', new AuthGuardMiddleware().execute, new DashboardInfoController().execute);
         //@NewController
-
     }
 
     public init(): Router {

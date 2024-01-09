@@ -18,7 +18,7 @@ export default class CategoryRepository implements ICategoryRepository {
         return categoriesQtd;
     }
 
-    public async findAllCategoriesByUnitId(unitId: string, page: number = 1, perPage: number = 6): Promise<any> {
+    public async findAllCategoriesByUnitId(unitId: string, page: number = 1, perPage: number): Promise<any> {
         const offset = (page - 1) * perPage;
 
         const categories = await Category.findAndCountAll({
