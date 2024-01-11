@@ -4,7 +4,8 @@ import { Category } from "../modules/category/entity/category.schema";
 import { Product } from "../modules/product/entity/product.schema";
 import { ProductsVariations } from "../modules/products-variations/entity/products-variations.schema";
 import { Menu } from "../modules/menu/entity/menu.schema";
-import { MenuItem } from "../modules/menu-item/entity/menu-item.schema";
+import { MenuCategory } from "../modules/menu-category/entity/menu-category.schema";
+import { MenuProduct } from "../modules/menu-product/entity/menu-product.schema";
 //@ImportModelSync
 
 export default class AssociationConfig {
@@ -40,14 +41,26 @@ export default class AssociationConfig {
         Unit.hasOne(Menu);
         Menu.belongsTo(Unit);
 
-        Menu.hasMany(MenuItem);
-        MenuItem.belongsTo(Menu);
+        User.hasMany(MenuCategory);
+        Menu.belongsTo(User);
 
-        Category.hasMany(MenuItem);
-        MenuItem.belongsTo(Category);
+        Category.hasMany(MenuCategory);
+        MenuCategory.belongsTo(Category);
 
-        Product.hasMany(MenuItem);
-        MenuItem.belongsTo(Product);
+        User.hasMany(MenuProduct);
+        MenuProduct.belongsTo(User);
+        
+        Product.hasMany(MenuProduct);
+        MenuProduct.belongsTo(Product);
+
+        Menu.hasMany(MenuProduct);
+        MenuProduct.belongsTo(Menu);
+
+        Menu.hasMany(MenuCategory);
+        MenuCategory.belongsTo(Menu);
+
+        MenuCategory.hasMany(MenuProduct);
+        MenuProduct.belongsTo(MenuCategory);
 
         callback();
     }

@@ -11,7 +11,7 @@ const Menu = database.define('menu', {
     },
     description: {
         type: DataTypes.TEXT(),
-        allowNull: false
+        allowNull: true
     },
     banner: {
         type: DataTypes.STRING(),

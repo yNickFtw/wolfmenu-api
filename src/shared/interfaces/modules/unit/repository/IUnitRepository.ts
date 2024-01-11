@@ -7,4 +7,5 @@ export interface IUnitRepository {
     countAllUnitiesOfUserByUserId(userId: string): Promise<number>
     findById(unitId: string): Promise<IUnit | null>;
     findAllByUserId(userId: string): Promise<IUnit[] | []>;
+    editAvatar(avatarImage: string, avatarImageFilename: string, unitId: string): Promise<void>;
 }

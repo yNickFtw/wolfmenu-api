@@ -39,4 +39,10 @@ export default class UnitRepository implements IUnitRepository {
 
         return unities as unknown as IUnit[];
     }
+
+    public async editAvatar(avatarImage: string, avatarImageFilename: string, unitId: string): Promise<void> {
+        await Unit.update({ avatarImage, avatarImageFilename }, { where: { id: unitId } });
+
+        return;
+    }
 }

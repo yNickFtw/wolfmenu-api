@@ -33,4 +33,10 @@ export default class CategoryRepository implements ICategoryRepository {
         return categories;
     }
 
+    public async findById(categoryId: string): Promise<ICategory | null> {
+        const category = await Category.findOne({ where: { id: categoryId } });
+
+        return category as unknown as ICategory;
+    }
+
 }

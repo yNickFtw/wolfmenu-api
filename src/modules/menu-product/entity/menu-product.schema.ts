@@ -2,27 +2,21 @@ import { DataTypes } from 'sequelize'
 import database from "../../../database/config";
 import { UUIDV4 } from 'sequelize';
 
-const MenuItem = database.define('menu_items', {
+const MenuProduct = database.define('menu_product', {
     id: {
         type: DataTypes.UUID,
+        allowNull: false,
         primaryKey: true,
-        allowNull: false,
-        defaultValue: UUIDV4,
+        defaultValue: UUIDV4
     },
-    isAvailable: {
+    isHighlight: {
         type: DataTypes.BOOLEAN(),
-        allowNull: false,
-        defaultValue: true
+        defaultValue: false,
     },
     position: {
         type: DataTypes.BIGINT(),
         allowNull: false,
-    },
-    highlighted: {
-        type: DataTypes.BOOLEAN(),
-        allowNull: false,
-        defaultValue: false,
     }
 })
 
-export { MenuItem };
+export { MenuProduct };

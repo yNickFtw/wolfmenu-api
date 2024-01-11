@@ -79,7 +79,7 @@ export default class CreateMenuByUnitIdUseCase implements ICreateMenuByUnitIdUse
 
         if (file) {
             bannerFilename = uuidv4();
-            compressedImageBuffer = await sharp(file.buffer).jpeg({ quality: 60 }).toBuffer();
+            compressedImageBuffer = await sharp(file.buffer).jpeg({ quality: 80 }).toBuffer();
             banner = await this.FirebaseService.uploadImage(bannerFilename, '/banners', compressedImageBuffer, file.mimetype)
         }
 

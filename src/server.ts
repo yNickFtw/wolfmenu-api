@@ -24,7 +24,7 @@ app.use(new MainRouter().init());
 const port = process.env.PORT;
 
 new AssociationConfig().init(() => {
-  database.sync({ force: true })
+  database.sync({ force: false })
     .then(() => {
       app.listen(port, () => {
         console.log("API RUNNING!")
