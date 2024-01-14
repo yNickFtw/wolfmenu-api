@@ -5,6 +5,7 @@ import AuthGuardMiddleware from "../../../shared/middlewares/AuthGuardMiddleware
 import FindMenuByUnitIdController from "../controllers/find-menu-by-unitId-controller";
 import { upload } from "../../../shared/middlewares/MulterMiddleware/multer-middleware";
 import ChangeBannerImageController from "../controllers/change-banner-image-controller";
+import UserIsOwnerOfMenuController from "../controllers/user-is-owner-of-menu-controller";
 
 
 export default class MenuRouter implements IRouter {
@@ -15,6 +16,7 @@ export default class MenuRouter implements IRouter {
         this.router.post('/create/:unitId', new AuthGuardMiddleware().execute, upload.single('file'), new CreateMenuByUnitIdController().execute);
         this.router.get('/find/:unitId', new AuthGuardMiddleware().execute, new FindMenuByUnitIdController().execute);
         this.router.put('/change/banner/image/:menuId', new AuthGuardMiddleware().execute, upload.single('file'), new ChangeBannerImageController().execute);
+        this.router.get('/user/is/owner/:menuId', new AuthGuardMiddleware().execute, new UserIsOwnerOfMenuController().execute);
         //@NewController
 
     }

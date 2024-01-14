@@ -14,4 +14,10 @@ export default class MenuProductRepository implements IMenuProductRepository {
 
         return menuProduct as unknown as IMenuProduct;
     }
+
+    public async countAllMenuProductsHasInMenuCategory(menuCategoryId: string, menuId: string): Promise<number> {
+        const counts = await MenuProduct.count({ where: { menuCategoryId: menuCategoryId, menuId: menuId } });
+
+        return counts;
+    }
 }

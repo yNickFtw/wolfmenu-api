@@ -1,23 +1,21 @@
 import { Request, Response } from "express";
 import { IController } from "../../../shared/interfaces/globals/IController";
 import { container } from "tsyringe";
-import { IAddProductToMenuCategoryUseCase } from "../../../shared/interfaces/modules/menu-product/useCases/IAddProductToMenuCategoryUseCase";
-import AddProductToMenuCategoryUseCase from "../useCases/add-product-to-menu-category-useCase";
+import { IUserIsOwnerOfMenuUseCase } from "../../../shared/interfaces/modules/menu/useCases/IUserIsOwnerOfMenuUseCase";
+import UserIsOwnerOfMenuUseCase from "../useCases/user-is-owner-of-menu-useCase";
 
-export default class AddProductToMenuCategoryController implements IController {
+export default class UserIsOwnerOfMenuController implements IController {
     public async execute(req: Request, res: Response): Promise<Response> {
         try {
             const token = req.headers["authorization"] as string;
 
-            const { menuId } = req.params
+            const { menuId } = req.params;
 
-            const { menuCategoryId, productId } = req.body;
+            const instanceOfUserIsOwnerOfMenuUseCase = container.resolve<IUserIsOwnerOfMenuUseCase>(UserIsOwnerOfMenuUseCase)
 
-            const instanceOfAddProductToMenuCategoryUseCase = container.resolve<IAddProductToMenuCategoryUseCase>(AddProductToMenuCategoryUseCase)
+            const result = await instanceOfUserIsOwnerOfMenuUseCase.execute(token, menuId);
 
-            await instanceOfAddProductToMenuCategoryUseCase.execute(token, menuCategoryId, productId, menuId)
-
-            return res.status(200).json();
+            return res.status(200).json({ userIsOwner: result });
         } catch (error: any) {
             if (error.statusCode && error.message) {
                 return res.status(error.statusCode).json({ message: error.message });

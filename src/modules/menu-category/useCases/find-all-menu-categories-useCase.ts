@@ -23,7 +23,7 @@ export default class FindAllMenuCategoriesUseCase implements IFindAllMenuCategor
         this.message = "";
     }
 
-    public async execute(token: string, menuId: string): Promise<IMenuCategory[] | []> {
+    public async execute(token: string, menuId: string): Promise<any> {
         const { userId } = this.JWTService.decodeToken(token, true);
 
         const menu = await this.MenuRepository.findById(menuId);
