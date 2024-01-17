@@ -31,8 +31,8 @@ export default class CreateProductUseCase implements ICreateProductUseCase, IApp
         this.message = "";
     }
 
-    public async execute(name: string, description: string, categoryId: string, unitId: string, file: Express.Multer.File | undefined, token: string): Promise<IProduct> {
-        if (!name || !description || !categoryId) {
+    public async execute(name: string, description: string, price: string, categoryId: string, unitId: string, file: Express.Multer.File | undefined, token: string): Promise<IProduct> {
+        if (!name || !description || !price || !categoryId) {
             const error: IAppError = {
                 statusCode: 400,
                 message: "Preencha todos campos."
@@ -67,9 +67,14 @@ export default class CreateProductUseCase implements ICreateProductUseCase, IApp
         const compressedImageBuffer = await sharp(file.buffer).jpeg({ quality: 80 }).toBuffer();
         const productImage = await this.FirebaseService.uploadImage(productImageFilename, 'products', compressedImageBuffer, file.mimetype)
 
+        price = price.replace('R$', '');
+        price = price.replace('.', '');
+        price = price.replace(',', '');
+
         const product: Partial<IProduct> = {
             name,
             description,
+            price: parseInt(price),
             productImage: productImage,
             productImageFilename: productImageFilename,
             userId: userId,
@@ -79,6 +84,6 @@ export default class CreateProductUseCase implements ICreateProductUseCase, IApp
 
         const productCreated = await this.ProductRepository.create(product);
 
-        return product as IProduct
+        return product as IProduct;
     }
 }

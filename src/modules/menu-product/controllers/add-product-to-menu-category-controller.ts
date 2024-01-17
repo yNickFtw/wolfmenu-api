@@ -17,7 +17,7 @@ export default class AddProductToMenuCategoryController implements IController {
 
             await instanceOfAddProductToMenuCategoryUseCase.execute(token, menuCategoryId, productId, menuId)
 
-            return res.status(200).json();
+            return res.status(200).json({ message: "Produto adicionado com sucesso." });
         } catch (error: any) {
             if (error.statusCode && error.message) {
                 return res.status(error.statusCode).json({ message: error.message });

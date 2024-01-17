@@ -17,6 +17,10 @@ const Product = database.define('product', {
         type: DataTypes.TEXT(),
         allowNull: false
     },
+    price: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: false
+    },
     productImage: {
         type: DataTypes.STRING(),
         allowNull: false

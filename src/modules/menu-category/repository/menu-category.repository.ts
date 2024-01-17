@@ -1,5 +1,7 @@
+import { FindOptions, Model, Sequelize, literal } from "sequelize";
 import { IMenuCategory } from "../../../shared/interfaces/modules/menu-category/IMenuCategory";
 import { IMenuCategoryRepository } from "../../../shared/interfaces/modules/menu-category/repository/IMenuCategoryRepository";
+import { Category } from "../../category/entity/category.schema";
 import { MenuProduct } from "../../menu-product/entity/menu-product.schema";
 import { Product } from "../../product/entity/product.schema";
 import { MenuCategory } from "../entity/menu-category.schema";
@@ -24,8 +26,25 @@ export default class MenuCategoryRepository implements IMenuCategoryRepository {
     }
 
     public async findAllByMenuId(menuId: string): Promise<IMenuCategory[] | []> {
-        const menuCategories = await MenuCategory.findAll({ where: { menuId: menuId }, include: [{ model: MenuProduct, include: [{ model: Product }] }] });
-
+        const menuCategories = await MenuCategory.findAll({
+            where: { menuId: menuId },
+            include: [
+                {
+                    model: MenuProduct,
+                    include: [{ model: Product }]
+                },
+                { model: Category, attributes: ["id", "name"] },
+            ],
+            attributes: {
+                include: [
+                    [
+                        Sequelize.literal('(SELECT COUNT(*) FROM menu_products WHERE menu_products.menuCategoryId = id)'),
+                        'menuProductsCount',
+                    ],
+                ],
+            },
+        } as FindOptions<Model>);
+    
         return menuCategories as unknown as IMenuCategory[];
     }
 }
