@@ -47,4 +47,19 @@ export default class ProductRepository implements IProductRepository {
 
         return products;
     }
+
+    public async findAllByCategoryId(categoryId: string, page: number, perPage: number): Promise<any> {
+        const offset = (page - 1) * perPage;
+
+        const products = await Product.findAndCountAll({
+            where: { categoryId: categoryId },
+            limit: perPage,
+            offset: offset,
+            order: [
+                ["createdAt", "DESC"]
+            ]
+        })
+
+        return products
+    }
 }

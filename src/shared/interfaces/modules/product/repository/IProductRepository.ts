@@ -7,4 +7,5 @@ export interface IProductRepository {
     countAllProductsByUnitId(unitId: string): Promise<number>;
     findById(productId: string): Promise<IProduct | null>;
     findAndCountAll(unitId: string, page: number, perPage: number): Promise<any>
+    findAllByCategoryId(categoryId: string, page: number, perPage: number): Promise<any>
 }
