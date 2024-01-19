@@ -43,8 +43,28 @@ export default class MenuCategoryRepository implements IMenuCategoryRepository {
                     ],
                 ],
             },
+            order: [["position", "ASC"]]
         } as FindOptions<Model>);
-    
+
         return menuCategories as unknown as IMenuCategory[];
     }
+
+    public async findById(id: string): Promise<IMenuCategory | null> {
+        const menuCategory = await MenuCategory.findOne({ where: { id: id } });
+
+        return menuCategory as unknown as IMenuCategory;
+    }
+
+    public async findByPosition(menuId: string, position: number): Promise<IMenuCategory | null> {
+        const menuCategory = await MenuCategory.findOne({ where: { menuId: menuId, position: position } });
+
+        return menuCategory as unknown as IMenuCategory;
+    }
+
+    public async update(menuCategory: Partial<IMenuCategory>, menuCategoryId: string): Promise<void> {
+        await MenuCategory.update({ ...menuCategory }, { where: { id: menuCategoryId } });
+
+        return;
+    }
+
 }
