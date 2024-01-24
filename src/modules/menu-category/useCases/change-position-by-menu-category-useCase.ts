@@ -65,7 +65,16 @@ export default class ChangePositionByMenuCategoryUseCase implements IChangePosit
             throw error;
         }
 
-        let positionToSearch: number = 0
+        const menuCategoryToChange = await this.MenuCategoryRepository.findById(menuCategoryIdToChange);
+
+        if (!menuCategoryToChange) {
+            const error: IAppError = {
+                statusCode: 404,
+                message: "Ocorreu um erro, tente novamente mais tarde."
+            };
+
+            throw error;
+        }
 
         if (arrow !== "up" && arrow !== "down") {
             const error: IAppError = {
@@ -76,17 +85,11 @@ export default class ChangePositionByMenuCategoryUseCase implements IChangePosit
             throw error;
         }
 
-        if (arrow === "up") {
-            positionToSearch = menuCategory.position - 1;
-        }
+        const [menuCategoryUpdated, menuCategoryToUpdated] = await Promise.all([
+            await this.MenuCategoryRepository.update({ position: menuCategoryToChange.position }, menuCategoryId),
+            await this.MenuCategoryRepository.update({ position: menuCategory.position }, menuCategoryIdToChange)
+        ])
 
-        if (arrow === "down") {
-            positionToSearch = menuCategory.position + 1;
-        }
-
-        await this.MenuCategoryRepository.update({ position: positionToSearch }, menuCategoryId)
-        await this.MenuCategoryRepository.update({ position: menuCategory.position }, menuCategoryIdToChange)
-
-        return
+        return;
     }
 }
