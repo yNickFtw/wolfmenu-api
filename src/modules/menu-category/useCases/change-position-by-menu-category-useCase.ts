@@ -85,7 +85,7 @@ export default class ChangePositionByMenuCategoryUseCase implements IChangePosit
             throw error;
         }
 
-        const [menuCategoryUpdated, menuCategoryToUpdated] = await Promise.all([
+        await Promise.all([
             await this.MenuCategoryRepository.update({ position: menuCategoryToChange.position }, menuCategoryId),
             await this.MenuCategoryRepository.update({ position: menuCategory.position }, menuCategoryIdToChange)
         ])
