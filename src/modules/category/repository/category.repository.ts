@@ -3,7 +3,7 @@ import { ICategoryRepository } from "../../../shared/interfaces/modules/category
 import { Product } from "../../product/entity/product.schema";
 import { Category } from "../entity/category.schema";
 import database from "../../../database/config";
-import { QueryTypes } from "sequelize";
+import { QueryTypes, Sequelize } from "sequelize";
 
 export default class CategoryRepository implements ICategoryRepository {
     public async create(category: Partial<ICategory>): Promise<void> {
@@ -25,8 +25,16 @@ export default class CategoryRepository implements ICategoryRepository {
             where: { unitId: unitId },
             limit: perPage,
             offset: offset,
+            attributes: {
+                include: [
+                    [
+                        Sequelize.literal('(SELECT COUNT(*) FROM products WHERE products.categoryId = Category.id)'),
+                        'countProducts'
+                    ]
+                ],
+            },
             order: [
-                ["createdAt", "DESC"]
+                ['createdAt', 'DESC']
             ]
         });
 

@@ -11,6 +11,7 @@ import ProductsVariationsRouter from "../../modules/products-variations/router/p
 import MenuRouter from "../../modules/menu/router/menu.router";
 import MenuCategoryRouter from "../../modules/menu-category/router/menu-category.router";
 import MenuProductRouter from "../../modules/menu-product/router/menu-product.router";
+import LinkRouter from "../../modules/link/router/link.router";
 //@ImportRouter
 
 export default class MainRouter implements IRouter {
@@ -27,8 +28,8 @@ export default class MainRouter implements IRouter {
         private menuRouter = container.resolve<IRouter>(MenuRouter),
         private menuCategoryRouter = container.resolve<IRouter>(MenuCategoryRouter),
         private menuProductRouter = container.resolve<IRouter>(MenuProductRouter),
+        private linkRouter = container.resolve<IRouter>(LinkRouter),
         //@InstanceRouter
-
     ) {
         this.router = Router();
         this.router.use('/users', this.userRouter.init());
@@ -41,6 +42,7 @@ export default class MainRouter implements IRouter {
         this.router.use('/menu', this.menuRouter.init());
         this.router.use('/menu-categories', this.menuCategoryRouter.init());
         this.router.use('/menu-products', this.menuProductRouter.init());
+        this.router.use('/links', this.linkRouter.init());
         //@NewInitInstance
     }
 

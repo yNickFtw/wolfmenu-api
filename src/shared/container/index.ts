@@ -21,6 +21,8 @@ import { IMenuCategoryRepository } from '../interfaces/modules/menu-category/rep
 import MenuCategoryRepository from '../../modules/menu-category/repository/menu-category.repository'
 import { IMenuProductRepository } from '../interfaces/modules/menu-product/repository/IMenuProductRepository'
 import MenuProductRepository from '../../modules/menu-product/repository/menu-product.repository'
+import { ILinkRepository } from '../interfaces/modules/link/repository/ILinkRepository'
+import LinkRepository from '../../modules/link/repository/link.repository'
 //@ImportInjection
 
 // @Imports Routes
@@ -34,6 +36,7 @@ import ProductsVariationsRouter from '../../modules/products-variations/router/p
 import MenuRouter from '../../modules/menu/router/menu.router'
 import MenuCategoryRouter from '../../modules/menu-category/router/menu-category.router'
 import MenuProductRouter from '../../modules/menu-product/router/menu-product.router'
+import LinkRouter from '../../modules/link/router/link.router'
 //@ImportRouter
 
 import JWTService from '../services/JWTService/JWTService';
@@ -97,6 +100,11 @@ container.register<IMenuProductRepository>(
 "MenuProductRepository",
 MenuProductRepository
 )
+
+container.register<ILinkRepository>(
+"LinkRepository",
+LinkRepository
+)
 //@InjectionDependecy
 
 // @Routers
@@ -149,6 +157,11 @@ container.register<IRouter>(
 container.register<IRouter>(
   "MenuProductRouter",
   MenuProductRouter
+)
+
+container.register<IRouter>(
+  "LinkRouter",
+  LinkRouter
 )
 //@RouterInjection
 
