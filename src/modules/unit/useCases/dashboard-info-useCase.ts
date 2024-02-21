@@ -7,6 +7,7 @@ import { IProductRepository } from "../../../shared/interfaces/modules/product/r
 import { IJWTService } from "../../../shared/services/JWTService/IJWTService";
 import { DashboardInfoDTO } from "../../../shared/interfaces/modules/unit/promises/DashboardInfoDTO";
 import { IUnitRepository } from "../../../shared/interfaces/modules/unit/repository/IUnitRepository";
+import { ILinkRepository } from "../../../shared/interfaces/modules/link/repository/ILinkRepository";
 
 @injectable()
 export default class DashboardInfoUseCase implements IDashboardInfoUseCase, IAppError {
@@ -22,6 +23,8 @@ export default class DashboardInfoUseCase implements IDashboardInfoUseCase, IApp
         private CategoryRepository: ICategoryRepository,
         @inject("ProductRepository")
         private ProductRepository: IProductRepository,
+        @inject("LinkRepository")
+        private LinkRepository: ILinkRepository,
         @inject("JWTService")
         private JWTService: IJWTService
     ) {
@@ -56,6 +59,8 @@ export default class DashboardInfoUseCase implements IDashboardInfoUseCase, IApp
 
         const products = await this.ProductRepository.countAllProductsByUnitId(unitId);
 
-        return { categories, products };
+        const links = await this.LinkRepository.countLinksByUnitId(unitId);
+
+        return { categories, products, links };
     }
 }

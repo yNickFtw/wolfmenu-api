@@ -23,6 +23,8 @@ import { IMenuProductRepository } from '../interfaces/modules/menu-product/repos
 import MenuProductRepository from '../../modules/menu-product/repository/menu-product.repository'
 import { ILinkRepository } from '../interfaces/modules/link/repository/ILinkRepository'
 import LinkRepository from '../../modules/link/repository/link.repository'
+import { IViewLinkRepository } from '../interfaces/modules/view-link/repository/IViewLinkRepository'
+import ViewLinkRepository from '../../modules/view-link/repository/view-link.repository'
 //@ImportInjection
 
 // @Imports Routes
@@ -37,6 +39,7 @@ import MenuRouter from '../../modules/menu/router/menu.router'
 import MenuCategoryRouter from '../../modules/menu-category/router/menu-category.router'
 import MenuProductRouter from '../../modules/menu-product/router/menu-product.router'
 import LinkRouter from '../../modules/link/router/link.router'
+import ViewLinkRouter from '../../modules/view-link/router/view-link.router'
 //@ImportRouter
 
 import JWTService from '../services/JWTService/JWTService';
@@ -105,6 +108,11 @@ container.register<ILinkRepository>(
 "LinkRepository",
 LinkRepository
 )
+
+container.register<IViewLinkRepository>(
+"ViewLinkRepository",
+ViewLinkRepository
+)
 //@InjectionDependecy
 
 // @Routers
@@ -162,6 +170,11 @@ container.register<IRouter>(
 container.register<IRouter>(
   "LinkRouter",
   LinkRouter
+)
+
+container.register<IRouter>(
+  "ViewLinkRouter",
+  ViewLinkRouter
 )
 //@RouterInjection
 

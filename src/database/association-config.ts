@@ -7,6 +7,7 @@ import { Menu } from "../modules/menu/entity/menu.schema";
 import { MenuCategory } from "../modules/menu-category/entity/menu-category.schema";
 import { MenuProduct } from "../modules/menu-product/entity/menu-product.schema";
 import { Link } from "../modules/link/entity/link.schema";
+import { ViewLink } from "../modules/view-link/entity/view-link.schema";
 //@ImportModelSync
 
 export default class AssociationConfig {
@@ -68,6 +69,9 @@ export default class AssociationConfig {
 
         Unit.hasMany(Link);
         Link.belongsTo(User);
+
+        Link.hasMany(ViewLink);
+        ViewLink.belongsTo(Link);
 
         callback();
     }
