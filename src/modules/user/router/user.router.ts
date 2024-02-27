@@ -5,7 +5,8 @@ import VerifyEmailController from "../controllers/verify-email-controller";
 import AuthenticateUserController from "../controllers/authenticate-user-controller";
 import FetchLoggedUserController from "../controllers/fetch-logged-user-controller";
 import AuthGuardMiddleware from "../../../shared/middlewares/AuthGuardMiddleware/auth-guard-middleware";
-//@ImportNewController
+import ForgotPasswordController from "../controllers/forgot-password-controller";
+    //@ImportNewController
 
 export default class UserRouter implements IRouter {
     router: Router;
@@ -16,7 +17,9 @@ export default class UserRouter implements IRouter {
         this.router.put('/verify/email/:token', new VerifyEmailController().execute);
         this.router.post('/authenticate', new AuthenticateUserController().execute);
         this.router.get('/fetch/logged/user', new AuthGuardMiddleware().execute, new FetchLoggedUserController().execute);
-        //@NewController
+        this.router.post('/forgot/password', new ForgotPasswordController().execute);
+    //@NewController
+    
 
     }
 

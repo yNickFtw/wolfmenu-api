@@ -24,15 +24,15 @@ app.use(new MainRouter().init());
 const port = process.env.PORT;
 
 new AssociationConfig().init(() => {
-  database.sync({ force: false })
-    .then(() => {
-      app.listen(port, () => {
-        console.log("API RUNNING!")
-      })
-    })
-    .catch((err) => {
-      if (err) {
-        console.log("Wops, something wrong! " + err);
-      }
-    })
-})
+    database.sync({force: true})
+        .then(() => {
+            app.listen(port, () => {
+                console.log("API RUNNING!")
+            })
+        })
+        .catch((err) => {
+            if (err) {
+                console.log("Wops, something wrong! " + err);
+            }
+        })
+});

@@ -2,7 +2,7 @@ import { IRouter } from "../../../shared/interfaces/globals/IRouter";
 import { Router } from "express";
 import AddProductToMenuCategoryController from "../controllers/add-product-to-menu-category-controller";
 import AuthGuardMiddleware from "../../../shared/middlewares/AuthGuardMiddleware/auth-guard-middleware";
-
+//@ImportNewController
 
 export default class MenuProductRouter implements IRouter {
     router: Router;
